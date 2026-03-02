@@ -1,0 +1,61 @@
+{
+  "navigation": {
+    "products": "Products",
+    "collections": "Collections",
+    "about": "About",
+    "contact": "Contact",
+    "search": "Search"
+  },
+  "home": {
+    "hero": {
+      "collection": "New Collection 2026",
+      "title": "Purity in Design.",
+      "cta": "Discover the Series"
+    },
+    "philosophy": {
+      "title": "Redefining the <br /> modern bathroom.",
+      "description": "MOGEN stands for the symbiosis of aesthetics and functionality. We create spaces that offer clarity and tranquility, inspired by European design traditions and crafted with uncompromising precision.",
+      "cta": "Our Vision"
+    },
+    "featured": {
+      "meta": "Design Highlights",
+      "title": "Featured Objects",
+      "viewAll": "View All"
+    },
+    "aero": {
+      "meta": "Design Series",
+      "title": "AERO COLLECTION",
+      "description": "A monolithic expression of purity. The Aero Collection redefines the bathroom as a sanctuary of silence and tactile warmth, featuring matte ceramic finishes and architectural forms.",
+      "cta": "Explore the Series"
+    },
+    "cta": {
+      "title": "Design your sanctuary.",
+      "button": "Find a Dealer"
+    }
+  },
+  "about": {
+    "meta": "The Heritage",
+    "title": "Our Story",
+    "philosophy": {
+      "meta": "Philosophy",
+      "title": "Beyond the Surface",
+      "desc1": "At MOGEN, we believe that the bathroom is the most intimate space in a home—a sanctuary for ritual, reflection, and rejuvenation. Our mission is to elevate these daily moments through design that is as enduring as it is beautiful.",
+      "desc2": "Founded in 2012, MOGEN was born from a desire to bridge the gap between architectural precision and human emotion. We don't just manufacture sanitaryware; we sculpt experiences in ceramic and stone.",
+      "quote": "Design is not just what it looks like and feels like. Design is how it works and how it makes you feel in the quietest hours of the day."
+    },
+    "values": {
+      "v1": {
+        "title": "Purity of Form",
+        "desc": "We strip away the unnecessary. Every line and curve in a MOGEN object serves a purpose, resulting in a timeless aesthetic that transcends fleeting trends."
+      },
+      "v2": {
+        "title": "Uncompromising Quality",
+        "desc": "From our DuraCeram® technology to our hand-finished surfaces, we utilize only the finest materials and most advanced manufacturing processes."
+      },
+      "v3": {
+        "title": "Sustainable Vision",
+        "desc": "Longevity is the ultimate form of sustainability. We design products that are built to last a lifetime, reducing environmental impact through durability."
+      }
+    }
+  }
+}

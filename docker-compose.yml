@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: mogen-db
+    environment:
+      POSTGRES_USER: mogen_user
+      POSTGRES_PASSWORD: mogen_pass
+      POSTGRES_DB: mogen_db
+    volumes:
+      - mogen-db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - mogen-network
+
+  strapi:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mogen-strapi
+    depends_on:
+      - db
+    env_file: ./backend/.env
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./backend/config:/opt/app/config
+      - ./backend/src:/opt/app/src
+      - ./backend/package.json:/opt/package.json
+      - ./backend/public/uploads:/opt/app/public/uploads
+    networks:
+      - mogen-network
+
+volumes:
+  mogen-db-data:
+
+networks:
+  mogen-network:
+    driver: bridge
