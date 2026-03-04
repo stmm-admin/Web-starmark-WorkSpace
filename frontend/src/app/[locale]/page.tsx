@@ -13,7 +13,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const trendings = await getTrendings(locale);
   const trending = trendings.length > 0 ? trendings[0] : null;
 
-  const featuredProducts = products.slice(0, 4);
+  // Use explicitly selected products from Strapi, or fallback to the first 4 available products
+  const featuredProducts = homepage.featured_products?.length
+    ? homepage.featured_products
+    : products.slice(0, 4);
 
   return (
     <div className="flex flex-col">
@@ -56,13 +59,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <section className="py-32 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="max-w-3xl">
-            <h2 className="heading-section" dangerouslySetInnerHTML={{ __html: dict.home.philosophy.title }}>
+            <h2 className="heading-section" dangerouslySetInnerHTML={{ __html: homepage.philosophy?.title || dict.home.philosophy.title }}>
             </h2>
             <p className="text-secondary text-lg leading-relaxed font-light mb-8">
-              {dict.home.philosophy.description}
+              {homepage.philosophy?.description || dict.home.philosophy.description}
             </p>
-            <Link href={`/${locale}/about`} className="text-xs font-bold uppercase tracking-widest border-b border-primary pb-2 hover:text-secondary hover:border-secondary transition-all">
-              {dict.home.philosophy.cta}
+            <Link href={homepage.philosophy?.cta_link || `/${locale}/about`} className="text-xs font-bold uppercase tracking-widest border-b border-primary pb-2 hover:text-secondary hover:border-secondary transition-all">
+              {homepage.philosophy?.cta_text || dict.home.philosophy.cta}
             </Link>
           </div>
         </div>
@@ -103,11 +106,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex justify-between items-end mb-16">
             <div>
-              <span className="text-meta mb-4 block">{dict.home.featured.meta}</span>
-              <h2 className="text-4xl font-serif">{dict.home.featured.title}</h2>
+              <span className="text-meta mb-4 block">{homepage.featured?.meta || dict.home.featured.meta}</span>
+              <h2 className="text-4xl font-serif">{homepage.featured?.title || dict.home.featured.title}</h2>
             </div>
-            <Link href={`/${locale}/products`} className="text-xs font-bold uppercase tracking-widest hover:text-secondary transition-colors">
-              {dict.home.featured.viewAll}
+            <Link href={homepage.featured?.view_all_link || `/${locale}/products`} className="text-xs font-bold uppercase tracking-widest hover:text-secondary transition-colors">
+              {homepage.featured?.view_all_text || dict.home.featured.viewAll}
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -162,9 +165,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       {/* CTA Section */}
       <section className="py-40 bg-primary text-white text-center">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl md:text-6xl font-serif mb-12 italic">{dict.home.cta.title}</h2>
-          <Link href={`/${locale}/contact`} className="btn-premium border border-white hover:bg-white hover:text-primary transition-all">
-            {dict.home.cta.button}
+          <h2 className="text-4xl md:text-6xl font-serif mb-12 italic">{homepage.cta?.title || dict.home.cta.title}</h2>
+          <Link href={homepage.cta?.button_link || `/${locale}/contact`} className="btn-premium border border-white hover:bg-white hover:text-primary transition-all">
+            {homepage.cta?.button_text || dict.home.cta.button}
           </Link>
         </div>
       </section>

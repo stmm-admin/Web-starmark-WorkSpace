@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getCollections, getStrapiMedia } from '@/lib/api';
+import { getCollections, getStrapiMedia, getCollectionPageData } from '@/lib/api';
 
 export default async function CollectionsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const collections = await getCollections(locale);
+  const pageData = await getCollectionPageData(locale);
 
   const t = {
     th: {
@@ -23,12 +24,38 @@ export default async function CollectionsPage({ params }: { params: Promise<{ lo
 
   return (
     <div className="bg-white min-h-screen">
+
+      {/* Hero Section */}
+      {pageData?.hero?.hero_video && (
+        <div className="relative h-[80vh] w-full overflow-hidden bg-neutral-900 border-b border-primary">
+          <video
+            src={getStrapiMedia(pageData.hero.hero_video.url) || ''}
+            poster={getStrapiMedia(pageData.hero.poster_image?.url) || ''}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/30 transition-colors" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-6">
+            <span className="text-[10px] uppercase tracking-[0.5em] mb-6 animate-fade-in font-bold">
+              {pageData.hero.subtitle}
+            </span>
+            <h1 className="text-5xl md:text-7xl font-serif italic mb-8 animate-slide-up">
+              {pageData.hero.title}
+            </h1>
+            <div className="w-24 h-px bg-white/50" />
+          </div>
+        </div>
+      )}
+
       <div className="container mx-auto px-6 lg:px-12 py-24">
         <div className="max-w-4xl mb-24">
-          <span className="text-meta mb-6 block">{t.meta}</span>
-          <h1 className="heading-section uppercase">{t.title}</h1>
+          <span className="text-meta mb-6 block">{pageData?.meta_text || t.meta}</span>
+          <h1 className="heading-section uppercase">{pageData?.title_text || t.title}</h1>
           <p className="text-secondary text-lg font-light leading-relaxed max-w-2xl">
-            {t.desc}
+            {pageData?.description_text || t.desc}
           </p>
         </div>
 
@@ -37,15 +64,27 @@ export default async function CollectionsPage({ params }: { params: Promise<{ lo
           {collections.map((collection) => (
             <Link key={collection.id} href={`/${locale}/collections/${collection.slug}`} className="group block">
               <div className="relative aspect-[16/9] bg-neutral-50 mb-10 overflow-hidden transition-all duration-700 group-hover:bg-neutral-100">
-                <Image
-                  src={getStrapiMedia(collection.hero_image?.url) || "https://images.unsplash.com/photo-1620626011761-9963d7521576?q=80&w=1200"}
-                  alt={collection.name}
-                  fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                />
+                {collection.hero?.hero_video ? (
+                  <video
+                    src={getStrapiMedia(collection.hero.hero_video.url) || ''}
+                    poster={getStrapiMedia(collection.hero.poster_image?.url) || ''}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  />
+                ) : (
+                  <Image
+                    src={getStrapiMedia(collection.hero_image?.url) || "https://images.unsplash.com/photo-1620626011761-9963d7521576?q=80&w=1200"}
+                    alt={collection.name}
+                    fill
+                    className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                  />
+                )}
                 <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-700" />
               </div>
-              
+
               <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-4">
                   <span className="w-8 h-px bg-neutral-200 group-hover:w-12 transition-all duration-500" />
@@ -53,7 +92,7 @@ export default async function CollectionsPage({ params }: { params: Promise<{ lo
                 </div>
                 <h2 className="text-3xl font-serif text-primary group-hover:translate-x-2 transition-transform duration-500 italic">{collection.name}</h2>
                 <p className="text-secondary font-light max-w-sm leading-relaxed">{collection.description}</p>
-                
+
                 <div className="mt-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
                   {t.explore}
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="ml-1">

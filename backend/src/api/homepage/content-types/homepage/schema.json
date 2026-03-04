@@ -4,7 +4,7 @@
     "info": {
         "singularName": "homepage",
         "pluralName": "homepages",
-        "displayName": "Homepage",
+        "displayName": "Homepage (หน้าแรกหลัก)",
         "description": "Homepage Configuration"
     },
     "options": {
@@ -15,6 +15,27 @@
             "type": "component",
             "repeatable": false,
             "component": "hero-video.hero"
+        },
+        "philosophy": {
+            "type": "component",
+            "repeatable": false,
+            "component": "sections.philosophy"
+        },
+        "featured": {
+            "type": "component",
+            "repeatable": false,
+            "component": "sections.featured"
+        },
+        "cta": {
+            "type": "component",
+            "repeatable": false,
+            "component": "sections.cta"
+        },
+        "featured_products": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::product.product",
+            "description": "เลือกสินค้าที่ต้องการให้ไปโชว์ในหัวข้อสินค้าเด่น (Design Highlights)"
         }
     }
 }

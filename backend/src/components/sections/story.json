@@ -1,0 +1,27 @@
+{
+    "collectionName": "components_sections_stories",
+    "info": {
+        "displayName": "Story (เรื่องราวแบรนด์)",
+        "description": "Brand story configuration"
+    },
+    "options": {},
+    "attributes": {
+        "meta": {
+            "type": "string",
+            "description": "คำโปรยเล็กๆ ด้านบนสุด (เช่น OUR STORY หรือ CONCEPT)"
+        },
+        "title": {
+            "type": "string",
+            "description": "ประโยคโคว้ทตัวหนา"
+        },
+        "description_1": {
+            "type": "text",
+            "description": "เนื้อหากล่าวถึงย่อหน้าที่ 1"
+        },
+        "description_2": {
+            "type": "text",
+            "description": "เนื้อหากล่าวถึงย่อหน้าที่ 2"
+        }
+    },
+    "config": {}
+}

@@ -1,0 +1,30 @@
+{
+    "kind": "singleType",
+    "collectionName": "collection_pages",
+    "info": {
+        "singularName": "collection-page",
+        "pluralName": "collection-pages",
+        "displayName": "Collections Page",
+        "description": "Configuration for the main Collections landing page"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "hero": {
+            "type": "component",
+            "repeatable": false,
+            "component": "hero-video.hero"
+        },
+        "meta_text": {
+            "type": "string"
+        },
+        "title_text": {
+            "type": "string"
+        },
+        "description_text": {
+            "type": "text"
+        }
+    }
+}

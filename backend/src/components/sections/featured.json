@@ -1,0 +1,26 @@
+{
+    "collectionName": "components_sections_featureds",
+    "info": {
+        "displayName": "Featured (ข้อความส่วนสินค้าเด่น)"
+    },
+    "options": {},
+    "attributes": {
+        "meta": {
+            "type": "string",
+            "description": "คำช่วยจำเล็กๆ (เช่น DESIGN HIGHLIGHTS)"
+        },
+        "title": {
+            "type": "string",
+            "description": "หัวข้อตัวใหญ่ (เช่น สินค้าเด่นประจำซีซั่น)"
+        },
+        "view_all_text": {
+            "type": "string",
+            "description": "ข้อความบนปุ่มดูทั้งหมด"
+        },
+        "view_all_link": {
+            "type": "string",
+            "description": "ลิงก์ของปุ่มดูทั้งหมด (เช่น /th/products)"
+        }
+    },
+    "config": {}
+}

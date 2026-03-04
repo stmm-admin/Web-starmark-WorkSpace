@@ -1,0 +1,20 @@
+{
+    "collectionName": "components_sections_timeline_items",
+    "info": {
+        "displayName": "timeline_item",
+        "description": "Company history timeline item"
+    },
+    "options": {},
+    "attributes": {
+        "year": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        },
+        "description": {
+            "type": "text"
+        }
+    },
+    "config": {}
+}

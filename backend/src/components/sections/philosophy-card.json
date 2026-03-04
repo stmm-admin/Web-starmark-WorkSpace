@@ -1,0 +1,23 @@
+{
+    "collectionName": "components_sections_philosophy_cards",
+    "info": {
+        "displayName": "philosophy_card",
+        "description": "Individual philosophy item"
+    },
+    "options": {},
+    "attributes": {
+        "number": {
+            "type": "string"
+        },
+        "label": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        },
+        "description": {
+            "type": "text"
+        }
+    },
+    "config": {}
+}

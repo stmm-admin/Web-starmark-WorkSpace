@@ -4,8 +4,8 @@
   "info": {
     "singularName": "product",
     "pluralName": "products",
-    "displayName": "Product",
-    "description": "Bathroom products"
+    "displayName": "Product (สินค้า)",
+    "description": "Mogen Product Items"
   },
   "options": {
     "draftAndPublish": true
@@ -14,12 +14,14 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "description": "ชื่อสินค้า (เช่น M-8898)"
     },
     "slug": {
       "type": "uid",
       "targetField": "name",
-      "required": true
+      "required": true,
+      "description": "URL ประจำสินค้า (เช่น m-8898) ตัวพิมพ์เล็กและห้ามเว้นวรรค"
     },
     "short_description": {
       "type": "string"

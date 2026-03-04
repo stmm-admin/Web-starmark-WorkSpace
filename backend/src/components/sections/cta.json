@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_sections_ctas",
+    "info": {
+        "displayName": "Call to Action (ปุ่มกดด้านล่างสุด)"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "text",
+            "description": "ข้อความเชิญชวนตัวใหญ่"
+        },
+        "button_text": {
+            "type": "string",
+            "description": "ข้อความบนปุ่มกด"
+        },
+        "button_link": {
+            "type": "string"
+        }
+    },
+    "config": {}
+}

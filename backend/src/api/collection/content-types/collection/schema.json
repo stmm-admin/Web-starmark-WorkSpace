@@ -4,21 +4,24 @@
   "info": {
     "singularName": "collection",
     "pluralName": "collections",
-    "displayName": "Collection",
-    "description": "Product collections"
+    "displayName": "Collection (ซีรีส์สินค้า)",
+    "description": "Product collections/series"
   },
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "description": "ชื่อซีรีส์ (เช่น MOGEN X PRO)"
     },
     "slug": {
       "type": "uid",
       "targetField": "name",
-      "required": true
+      "required": true,
+      "description": "URL ประจำซีรีส์ (ตัวพิมพ์เล็ก ห้ามเว้นวรรค)"
     },
     "hero_image": {
       "type": "media",
@@ -35,6 +38,16 @@
       "relation": "oneToMany",
       "target": "api::product.product",
       "mappedBy": "collection"
+    },
+    "hero": {
+      "type": "component",
+      "repeatable": false,
+      "component": "hero-video.hero"
+    },
+    "story": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.story"
     }
   }
 }

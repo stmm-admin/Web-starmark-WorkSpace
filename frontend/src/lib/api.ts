@@ -19,6 +19,20 @@ export interface Collection {
   slug: string;
   description: string;
   hero_image?: any;
+  hero?: {
+    id: number;
+    title: string;
+    subtitle: string;
+    hero_video: any;
+    poster_image: any;
+  };
+  story?: {
+    id: number;
+    meta: string;
+    title: string;
+    description_1: string;
+    description_2: string;
+  };
   products?: Product[];
 }
 
@@ -49,6 +63,27 @@ export interface Homepage {
     hero_video: any;
     poster_image: any;
   };
+  philosophy?: {
+    id: number;
+    title: string;
+    description: string;
+    cta_text: string;
+    cta_link: string;
+  };
+  featured?: {
+    id: number;
+    meta: string;
+    title: string;
+    view_all_text: string;
+    view_all_link: string;
+  };
+  cta?: {
+    id: number;
+    title: string;
+    button_text: string;
+    button_link: string;
+  };
+  featured_products?: Product[];
 }
 
 export interface Trending {
@@ -234,13 +269,33 @@ export async function getProductBySlug(slug: string, locale: string = 'th'): Pro
   return mock || null;
 }
 
+export interface CollectionPageData {
+  id: string | number;
+  documentId?: string;
+  meta_text?: string;
+  title_text?: string;
+  description_text?: string;
+  hero?: {
+    id: number;
+    title: string;
+    subtitle: string;
+    hero_video: any;
+    poster_image: any;
+  };
+}
+
+export async function getCollectionPageData(locale: string = 'th'): Promise<CollectionPageData | null> {
+  const data = await fetchAPI(`/collection-page?populate[0]=hero.hero_video&populate[1]=hero.poster_image&locale=${locale}`);
+  return data || null;
+}
+
 export async function getCollections(locale: string = 'th'): Promise<Collection[]> {
-  const data = await fetchAPI(`/collections?populate=*&locale=${locale}`);
+  const data = await fetchAPI(`/collections?populate[0]=products&populate[1]=hero_image&populate[2]=hero.hero_video&populate[3]=hero.poster_image&locale=${locale}`);
   return data || MOCK_COLLECTIONS;
 }
 
 export async function getCollectionBySlug(slug: string, locale: string = 'th'): Promise<Collection | null> {
-  const data = await fetchAPI(`/collections?filters[slug][$eq]=${slug}&populate[products][populate]=*&populate[hero_image]=*&locale=${locale}`);
+  const data = await fetchAPI(`/collections?filters[slug][$eq]=${slug}&populate[0]=products.gallery&populate[1]=hero_image&populate[2]=hero.hero_video&populate[3]=hero.poster_image&populate[4]=story&locale=${locale}`);
   if (data && data.length > 0) return data[0];
 
   const mock = MOCK_COLLECTIONS.find(c => c.slug === slug);
@@ -255,17 +310,57 @@ export async function getCollectionBySlug(slug: string, locale: string = 'th'): 
 export interface About {
   id: string | number;
   documentId?: string;
-  About: any[]; // Strapi blocks type
+  hero?: {
+    id: number;
+    title: string;
+    subtitle: string;
+    hero_video: any;
+    poster_image: any;
+  };
+  story?: {
+    id: number;
+    meta: string;
+    title: string;
+    description_1: string;
+    description_2: string;
+  };
+  vision?: {
+    id: number;
+    meta: string;
+    title: string;
+    statement: string;
+  };
+  philosophies?: {
+    id: number;
+    number: string;
+    label: string;
+    title: string;
+    description: string;
+  }[];
+  timeline?: {
+    id: number;
+    year: string;
+    title: string;
+    description: string;
+  }[];
+  cta?: {
+    id: number;
+    title: string;
+    subtitle: string;
+    button_text: string;
+    button_link: string;
+    button2_text: string;
+    button2_link: string;
+  };
 }
 
 export async function getAbout(locale: string = 'th'): Promise<About | null> {
-  const data = await fetchAPI(`/abouts?populate=*&locale=${locale}`);
-  if (data && data.length > 0) return data[0];
-  return null;
+  const data = await fetchAPI(`/about?populate[hero][populate]=*&populate[story]=*&populate[vision]=*&populate[philosophies]=*&populate[timeline]=*&populate[cta]=*&locale=${locale}`);
+  return data || null;
 }
 
 export async function getHomepage(locale: string = 'th'): Promise<Homepage> {
-  const data = await fetchAPI(`/homepage?populate[hero][populate]=*&locale=${locale}`);
+  const data = await fetchAPI(`/homepage?populate[0]=hero.hero_video&populate[1]=hero.poster_image&populate[2]=philosophy&populate[3]=featured&populate[4]=cta&populate[5]=featured_products.gallery&locale=${locale}`);
   return data || MOCK_HOMEPAGE;
 }
 

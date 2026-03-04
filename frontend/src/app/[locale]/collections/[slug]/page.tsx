@@ -43,18 +43,34 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
   return (
     <div className="bg-white min-h-screen">
       {/* Hero Section */}
-      <div className="relative h-[70vh] w-full overflow-hidden">
-        <Image
-          src={getStrapiMedia(collection.hero_image?.url) || "https://images.unsplash.com/photo-1620626011761-9963d7521576?q=80&w=2000"}
-          alt={collection.name}
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/20" />
+      <div className="relative h-[70vh] w-full overflow-hidden bg-neutral-900">
+        {collection.hero?.hero_video ? (
+          <video
+            src={getStrapiMedia(collection.hero.hero_video.url) || ''}
+            poster={getStrapiMedia(collection.hero.poster_image?.url) || ''}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <Image
+            src={getStrapiMedia(collection.hero_image?.url) || "https://images.unsplash.com/photo-1620626011761-9963d7521576?q=80&w=2000"}
+            alt={collection.name}
+            fill
+            className="object-cover"
+            priority
+          />
+        )}
+        <div className="absolute inset-0 bg-black/30 transition-colors" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-6">
-          <span className="text-[10px] uppercase tracking-[0.5em] mb-6 animate-fade-in">{t.meta}</span>
-          <h1 className="text-5xl md:text-7xl font-serif italic mb-8 animate-slide-up">{collection.name}</h1>
+          <span className="text-[10px] uppercase tracking-[0.5em] mb-6 animate-fade-in font-bold">
+            {collection.hero?.subtitle || t.meta}
+          </span>
+          <h1 className="text-5xl md:text-7xl font-serif italic mb-8 animate-slide-up">
+            {collection.hero?.title || collection.name}
+          </h1>
           <div className="w-24 h-px bg-white/50" />
         </div>
       </div>
@@ -62,17 +78,19 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
       <div className="container mx-auto px-6 lg:px-12 py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-32">
           <div className="lg:col-span-4">
-            <h2 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-8">{t.concept}</h2>
+            <h2 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-8">
+              {collection.story?.meta || t.concept}
+            </h2>
             <p className="text-secondary text-lg font-light leading-relaxed italic">
-              "{collection.description}"
+              "{collection.story?.title || collection.description}"
             </p>
           </div>
           <div className="lg:col-span-7 lg:col-start-6">
             <p className="text-secondary text-lg font-light leading-relaxed mb-8">
-              {t.desc1}
+              {collection.story?.description_1 || t.desc1}
             </p>
             <p className="text-secondary text-lg font-light leading-relaxed">
-              {t.desc2}
+              {collection.story?.description_2 || t.desc2}
             </p>
           </div>
         </div>
@@ -108,7 +126,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
               </Link>
             ))}
           </div>
-          
+
           {(!collection.products || collection.products.length === 0) && (
             <div className="text-center py-24 bg-neutral-50 rounded-lg">
               <p className="text-secondary font-light italic">{t.empty}</p>

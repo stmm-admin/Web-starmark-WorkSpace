@@ -1,0 +1,45 @@
+{
+    "kind": "singleType",
+    "collectionName": "abouts",
+    "info": {
+        "singularName": "about",
+        "pluralName": "abouts",
+        "displayName": "About",
+        "description": "About page configuration"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "hero": {
+            "type": "component",
+            "repeatable": false,
+            "component": "hero-video.hero"
+        },
+        "story": {
+            "type": "component",
+            "repeatable": false,
+            "component": "sections.story"
+        },
+        "vision": {
+            "type": "component",
+            "repeatable": false,
+            "component": "sections.vision"
+        },
+        "philosophies": {
+            "type": "component",
+            "repeatable": true,
+            "component": "sections.philosophy-card"
+        },
+        "timeline": {
+            "type": "component",
+            "repeatable": true,
+            "component": "sections.timeline-item"
+        },
+        "cta": {
+            "type": "component",
+            "repeatable": false,
+            "component": "sections.cta"
+        }
+    }
+}

@@ -1,15 +1,18 @@
 {
   "collectionName": "components_hero_video_heroes",
   "info": {
-    "displayName": "hero"
+    "displayName": "Hero Video (แบนเนอร์วิดีโอหลัก)",
+    "description": "The main hero section with a looping background video"
   },
   "options": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "description": "หัวข้อหลักตัวใหญ่"
     },
     "subtitle": {
-      "type": "string"
+      "type": "string",
+      "description": "คำโปรยเล็กๆ ด้านบนสุด"
     },
     "hero_video": {
       "type": "media",

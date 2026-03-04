@@ -1,0 +1,27 @@
+{
+    "collectionName": "components_sections_philosophies",
+    "info": {
+        "displayName": "Philosophy (หลักปรัชญา)",
+        "description": "Philosophy section with a CTA"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "description": "หัวข้อหลักปรัชญา"
+        },
+        "description": {
+            "type": "text",
+            "description": "คำอธิบายปรัชญาแบบยาว"
+        },
+        "cta_text": {
+            "type": "string",
+            "description": "ข้อความบนปุ่มกด (เช่น อ่านเกี่ยวกับเราเพิ่มเติม)"
+        },
+        "cta_link": {
+            "type": "string",
+            "description": "ลิงก์ของปุ่มกด (เช่น /th/about)"
+        }
+    },
+    "config": {}
+}
