@@ -17,18 +17,18 @@ export function Header() {
               MOGEN
             </Link>
           </div>
-          
+
           <nav className="hidden lg:flex items-center space-x-12">
-            <Link href={`/${locale}/products`} className="text-[10px] uppercase tracking-[0.2em] font-semibold text-primary/70 hover:text-primary transition-colors">
+            <Link href={`/${locale}/products`} className="text-[12px] uppercase tracking-[0.2em] font-semibold text-primary/70 hover:text-primary transition-colors">
               Products
             </Link>
-            <Link href={`/${locale}/collections`} className="text-[10px] uppercase tracking-[0.2em] font-semibold text-primary/70 hover:text-primary transition-colors">
+            <Link href={`/${locale}/collections`} className="text-[12px] uppercase tracking-[0.2em] font-semibold text-primary/70 hover:text-primary transition-colors">
               Collections
             </Link>
-            <Link href={`/${locale}/about`} className="text-[10px] uppercase tracking-[0.2em] font-semibold text-primary/70 hover:text-primary transition-colors">
+            <Link href={`/${locale}/about`} className="text-[12px] uppercase tracking-[0.2em] font-semibold text-primary/70 hover:text-primary transition-colors">
               About
             </Link>
-            <Link href={`/${locale}/contact`} className="text-[10px] uppercase tracking-[0.2em] font-semibold text-primary/70 hover:text-primary transition-colors">
+            <Link href={`/${locale}/contact`} className="text-[12px] uppercase tracking-[0.2em] font-semibold text-primary/70 hover:text-primary transition-colors">
               Contact
             </Link>
           </nav>

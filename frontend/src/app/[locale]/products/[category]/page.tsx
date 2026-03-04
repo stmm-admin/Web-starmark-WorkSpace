@@ -17,7 +17,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
   const t = {
     th: {
       meta: 'คอลเลกชัน',
-      all: 'วัตถุทั้งหมด',
+      all: 'สินค้าทั้งหมด',
       empty: 'ไม่พบสินค้าในหมวดหมู่นี้'
     },
     en: {
@@ -48,8 +48,8 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
               key={cat.id}
               href={`/${locale}/products/${cat.slug}`}
               className={`text-[10px] uppercase tracking-[0.3em] font-bold pb-8 transition-all ${cat.slug === categorySlug
-                  ? 'text-primary border-b-2 border-primary -mb-[34px]'
-                  : 'text-secondary hover:text-primary'
+                ? 'text-primary border-b-2 border-primary -mb-[34px]'
+                : 'text-secondary hover:text-primary'
                 }`}
             >
               {cat.name}

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getCategories, getProducts, getStrapiMedia } from '@/lib/api';
+import { getCategories, getProducts, getHomepage, getTrendings, getStrapiMedia } from '@/lib/api';
 import { getDictionary } from '@/dictionaries/get-dictionary';
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
@@ -9,26 +9,42 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
   const categories = await getCategories(locale);
   const products = await getProducts(undefined, locale);
+  const homepage = await getHomepage(locale);
+  const trendings = await getTrendings(locale);
+  const trending = trendings.length > 0 ? trendings[0] : null;
+
   const featuredProducts = products.slice(0, 4);
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section - Full Bleed */}
-      <section className="relative h-[90vh] w-full overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000"
-          alt="Modern Minimalist Bathroom"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/10" />
+      {/* Dynamic Video Hero Section */}
+      <section className="relative h-[90vh] w-full overflow-hidden bg-black">
+        {homepage.hero?.hero_video ? (
+          <video
+            src={getStrapiMedia(homepage.hero.hero_video.url) || ''}
+            poster={getStrapiMedia(homepage.hero.poster_image?.url) || ''}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <Image
+            src={getStrapiMedia(homepage.hero?.poster_image?.url) || "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000"}
+            alt="Hero Background"
+            fill
+            className="object-cover opacity-80"
+            priority
+          />
+        )}
+        <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <span className="text-white text-[10px] uppercase tracking-[0.4em] mb-6 font-semibold animate-fade-in">
-            {dict.home.hero.collection}
+            {homepage.hero?.subtitle || dict.home.hero.collection}
           </span>
           <h1 className="text-white heading-hero mb-8 max-w-4xl">
-            {dict.home.hero.title}
+            {homepage.hero?.title || dict.home.hero.title}
           </h1>
           <Link href={`/${locale}/products`} className="btn-premium bg-white text-primary hover:bg-neutral-100">
             {dict.home.hero.cta}
@@ -115,31 +131,33 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </section>
 
-      {/* Collections Section - Split Screen Style */}
-      <section className="py-32 bg-white">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            <div className="lg:col-span-5">
-              <span className="text-meta mb-4 block">{dict.home.aero.meta}</span>
-              <h2 className="heading-section mb-8 uppercase italic">{dict.home.aero.title}</h2>
-              <p className="text-secondary text-lg font-light leading-relaxed mb-12">
-                {dict.home.aero.description}
-              </p>
-              <Link href={`/${locale}/collections/aero-collection`} className="btn-premium border border-primary hover:bg-primary hover:text-white transition-all inline-block">
-                {dict.home.aero.cta}
-              </Link>
-            </div>
-            <div className="lg:col-span-7 relative aspect-[4/3] bg-neutral-100 overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1620626011761-9963d7521576?q=80&w=1200"
-                alt="Aero Collection Hero"
-                fill
-                className="object-cover transition-transform duration-1000 hover:scale-105"
-              />
+      {/* Collections Section - Split Screen Style (Trending Topics) */}
+      {trendings.map((item, idx) => (
+        <section key={item.id} className={`py-32 ${idx % 2 === 1 ? 'bg-neutral-50' : 'bg-white'}`}>
+          <div className="container mx-auto px-6 lg:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+              <div className={`lg:col-span-5 ${idx % 2 === 1 ? 'lg:order-2' : ''}`}>
+                <span className="text-meta mb-4 block">{dict.home.aero.meta}</span>
+                <h2 className="heading-section mb-8 uppercase italic">{item.title}</h2>
+                <p className="text-secondary text-lg font-light leading-relaxed mb-12">
+                  {item.description}
+                </p>
+                <Link href={`/${locale}/products?trending=${item.slug}`} className="btn-premium border border-primary hover:bg-primary hover:text-white transition-all inline-block">
+                  {dict.home.aero.cta}
+                </Link>
+              </div>
+              <div className={`lg:col-span-7 relative aspect-[4/3] bg-neutral-100 overflow-hidden ${idx % 2 === 1 ? 'lg:order-1' : ''}`}>
+                <Image
+                  src={getStrapiMedia(item.hero_image?.url) || "https://images.unsplash.com/photo-1620626011761-9963d7521576?q=80&w=1200"}
+                  alt={item.title}
+                  fill
+                  className="object-cover transition-transform duration-1000 hover:scale-105"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ))}
 
       {/* CTA Section */}
       <section className="py-40 bg-primary text-white text-center">

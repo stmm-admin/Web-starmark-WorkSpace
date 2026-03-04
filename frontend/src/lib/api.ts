@@ -34,8 +34,30 @@ export interface Product {
   gallery: any[];
   specifications: Record<string, string>;
   downloads: any[];
+  video?: any;
   seo_title?: string;
   seo_description?: string;
+}
+
+export interface Homepage {
+  id: string | number;
+  documentId?: string;
+  hero?: {
+    id: number;
+    title: string;
+    subtitle: string;
+    hero_video: any;
+    poster_image: any;
+  };
+}
+
+export interface Trending {
+  id: string | number;
+  documentId?: string;
+  title: string;
+  slug: string;
+  description: string;
+  hero_image: any;
 }
 
 /**
@@ -116,7 +138,8 @@ const MOCK_PRODUCTS: Product[] = [
     collection: 'Aero Collection',
     gallery: [],
     specifications: { 'Dimensions': '400 x 400 x 850 mm', 'Material': 'DuraCeram®', 'Finish': 'Matte White' },
-    downloads: ['#']
+    downloads: ['#'],
+    video: { url: 'https://vjs.zencdn.net/v/oceans.mp4' }
   },
   {
     id: '2',
@@ -156,14 +179,35 @@ const MOCK_PRODUCTS: Product[] = [
   }
 ];
 
+const MOCK_HOMEPAGE: Homepage = {
+  id: '1',
+  hero: {
+    id: 1,
+    title: "Clarity. Comfort. Longevity.",
+    subtitle: "A NEW STANDARD IN SANITARYWARE",
+    hero_video: { url: "/uploads/video_referent_e686712d5e.mp4" },
+    poster_image: { url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000" }
+  }
+};
+
+const MOCK_TRENDINGS: Trending[] = [
+  {
+    id: '1',
+    title: "TRENDING TOPICS",
+    slug: "trending-topics",
+    description: "Discover our latest trending products and curated series. From modern bathroom essentials to innovative design solutions, explore what's making waves in contemporary architecture.",
+    hero_image: { url: "https://images.unsplash.com/photo-1620626011761-9963d7521576?q=80&w=1200" }
+  }
+];
+
 // --- API Methods ---
 
-export async function getCategories(locale: string = 'en'): Promise<Category[]> {
+export async function getCategories(locale: string = 'th'): Promise<Category[]> {
   const data = await fetchAPI(`/categories?populate=*&locale=${locale}`);
   return data || MOCK_CATEGORIES;
 }
 
-export async function getCategoryBySlug(slug: string, locale: string = 'en'): Promise<Category | null> {
+export async function getCategoryBySlug(slug: string, locale: string = 'th'): Promise<Category | null> {
   const data = await fetchAPI(`/categories?filters[slug][$eq]=${slug}&populate=*&locale=${locale}`);
   if (data && data.length > 0) return data[0];
 
@@ -171,7 +215,7 @@ export async function getCategoryBySlug(slug: string, locale: string = 'en'): Pr
   return mock || null;
 }
 
-export async function getProducts(categorySlug?: string, locale: string = 'en'): Promise<Product[]> {
+export async function getProducts(categorySlug?: string, locale: string = 'th'): Promise<Product[]> {
   const filter = categorySlug ? `&filters[category][slug][$eq]=${categorySlug}` : '';
   const data = await fetchAPI(`/products?populate=*${filter}&locale=${locale}`);
 
@@ -182,7 +226,7 @@ export async function getProducts(categorySlug?: string, locale: string = 'en'):
     : MOCK_PRODUCTS;
 }
 
-export async function getProductBySlug(slug: string, locale: string = 'en'): Promise<Product | null> {
+export async function getProductBySlug(slug: string, locale: string = 'th'): Promise<Product | null> {
   const data = await fetchAPI(`/products?filters[slug][$eq]=${slug}&populate=*&locale=${locale}`);
   if (data && data.length > 0) return data[0];
 
@@ -190,12 +234,12 @@ export async function getProductBySlug(slug: string, locale: string = 'en'): Pro
   return mock || null;
 }
 
-export async function getCollections(locale: string = 'en'): Promise<Collection[]> {
+export async function getCollections(locale: string = 'th'): Promise<Collection[]> {
   const data = await fetchAPI(`/collections?populate=*&locale=${locale}`);
   return data || MOCK_COLLECTIONS;
 }
 
-export async function getCollectionBySlug(slug: string, locale: string = 'en'): Promise<Collection | null> {
+export async function getCollectionBySlug(slug: string, locale: string = 'th'): Promise<Collection | null> {
   const data = await fetchAPI(`/collections?filters[slug][$eq]=${slug}&populate[products][populate]=*&populate[hero_image]=*&locale=${locale}`);
   if (data && data.length > 0) return data[0];
 
@@ -214,8 +258,18 @@ export interface About {
   About: any[]; // Strapi blocks type
 }
 
-export async function getAbout(locale: string = 'en'): Promise<About | null> {
+export async function getAbout(locale: string = 'th'): Promise<About | null> {
   const data = await fetchAPI(`/abouts?populate=*&locale=${locale}`);
   if (data && data.length > 0) return data[0];
   return null;
+}
+
+export async function getHomepage(locale: string = 'th'): Promise<Homepage> {
+  const data = await fetchAPI(`/homepage?populate[hero][populate]=*&locale=${locale}`);
+  return data || MOCK_HOMEPAGE;
+}
+
+export async function getTrendings(locale: string = 'th'): Promise<Trending[]> {
+  const data = await fetchAPI(`/trending-1?populate=*&locale=${locale}`);
+  return data || MOCK_TRENDINGS;
 }

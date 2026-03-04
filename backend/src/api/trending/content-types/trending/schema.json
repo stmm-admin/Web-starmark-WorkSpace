@@ -1,40 +1,43 @@
 {
   "kind": "collectionType",
-  "collectionName": "collections",
+  "collectionName": "trending_1",
   "info": {
-    "singularName": "collection",
-    "pluralName": "collections",
-    "displayName": "Collection",
-    "description": "Product collections"
+    "singularName": "trending",
+    "pluralName": "trending-1",
+    "displayName": "TRENDING TOPICS"
   },
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
-    "name": {
+    "title": {
       "type": "string",
       "required": true
     },
     "slug": {
       "type": "uid",
-      "targetField": "name",
+      "targetField": "title",
       "required": true
     },
     "hero_image": {
       "type": "media",
       "multiple": false,
       "allowedTypes": [
-        "images"
+        "images",
+        "files",
+        "videos",
+        "audios"
       ]
-    },
-    "description": {
-      "type": "text"
     },
     "products": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::product.product",
-      "mappedBy": "collection"
+      "mappedBy": "trending_topic"
+    },
+    "description": {
+      "type": "text"
     }
   }
 }

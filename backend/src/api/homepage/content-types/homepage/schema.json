@@ -1,0 +1,20 @@
+{
+    "kind": "singleType",
+    "collectionName": "homepages",
+    "info": {
+        "singularName": "homepage",
+        "pluralName": "homepages",
+        "displayName": "Homepage",
+        "description": "Homepage Configuration"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "hero": {
+            "type": "component",
+            "repeatable": false,
+            "component": "hero-video.hero"
+        }
+    }
+}

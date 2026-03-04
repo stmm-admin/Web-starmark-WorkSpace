@@ -19,7 +19,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       specs: 'ข้อมูลทางเทคนิค',
       downloads: 'ดาวน์โหลด',
       pdf: 'ใบระบุคุณลักษณะ (PDF)',
-      inquire: 'สอบถามข้อมูลเกี่ยวกับสินค้านี้'
+      inquire: 'สอบถามข้อมูลเกี่ยวกับสินค้านี้',
+      video: 'วิดีโอ'
     },
     en: {
       back: 'Back to',
@@ -28,7 +29,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       specs: 'Technical Specifications',
       downloads: 'Downloads',
       pdf: 'Specification Sheet (PDF)',
-      inquire: 'Inquire about this object'
+      inquire: 'Inquire about this object',
+      video: 'Video'
     }
   }[locale as 'en' | 'th'];
 
@@ -96,6 +98,21 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 ))}
               </dl>
             </div>
+
+            {/* Video */}
+            {product.video && (
+              <div className="border-t border-neutral-100 pt-10 mb-12">
+                <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-8">{t.video}</h3>
+                <div className="relative aspect-video w-full bg-black flex items-center justify-center overflow-hidden">
+                  <video
+                    src={getStrapiMedia(product.video?.url) || ''}
+                    controls
+                    playsInline
+                    className="w-full h-full"
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Downloads */}
             {product.downloads && product.downloads.length > 0 && (

@@ -9,13 +9,13 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
 
   const t = {
     th: {
-      meta: 'ภาพรวมคอลเลกชัน',
-      title: 'สินค้าทั้งหมด',
+      meta: 'Collections Overview',
+      title: 'All Products',
       desc: 'สำรวจสุขภัณฑ์ระดับไฮเอนด์ที่ครบครันของเรา ออกแบบมาเพื่อความชัดเจน ความสบาย และอายุการใช้งานที่ยาวนาน',
-      all: 'วัตถุทั้งหมด'
+      all: 'All Objects'
     },
     en: {
-      meta: 'Collection Overview',
+      meta: 'Collections Overview',
       title: 'All Products',
       desc: 'Explore our complete range of high-end sanitaryware, designed for clarity, comfort, and longevity.',
       all: 'All Objects'
