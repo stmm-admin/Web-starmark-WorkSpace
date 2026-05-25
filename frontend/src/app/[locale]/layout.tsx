@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display, Kanit } from 'next/font/google';
 import '../globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -12,6 +12,12 @@ const inter = Inter({
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
+});
+
+const kanit = Kanit({
+  subsets: ['thai', 'latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-kanit',
 });
 
 export const metadata: Metadata = {
@@ -34,7 +40,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${inter.variable} ${playfair.variable} font-sans min-h-screen flex flex-col antialiased`}>
+      <body className={`${inter.variable} ${playfair.variable} ${kanit.variable} font-sans min-h-screen flex flex-col antialiased`}>
         <Header />
         <main className="flex-grow">
           {children}

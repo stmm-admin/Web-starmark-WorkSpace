@@ -11,13 +11,13 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
     th: {
       meta: 'Collections Overview',
       title: 'All Products',
-      desc: 'สำรวจสุขภัณฑ์ระดับไฮเอนด์ที่ครบครันของเรา ออกแบบมาเพื่อความชัดเจน ความสบาย และอายุการใช้งานที่ยาวนาน',
+      desc: 'เฟอร์นิเจอร์สำนักงานระดับพรีเมียมครบทุกกลุ่ม ออกแบบเพื่อองค์กรชั้นนำ',
       all: 'All Objects'
     },
     en: {
       meta: 'Collections Overview',
       title: 'All Products',
-      desc: 'Explore our complete range of high-end sanitaryware, designed for clarity, comfort, and longevity.',
+      desc: 'Premium office furniture across every category, designed for leading organizations.',
       all: 'All Objects'
     }
   }[locale as 'en' | 'th'];

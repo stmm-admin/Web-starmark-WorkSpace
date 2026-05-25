@@ -17,26 +17,26 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
 
   const t = {
     th: {
-      meta: 'คอลเลกชัน',
-      concept: 'แนวคิดและปรัชญา',
-      desc1: `คอลเลกชัน ${collection.name} เป็นตัวแทนของความมุ่งมั่นสู่ความเป็นเลิศในการออกแบบห้องน้ำ ทุกชิ้นในคอลเลกชันนี้ได้รับการสร้างสรรค์อย่างพิถีพิถันเพื่อให้แน่ใจว่ามีความสมดุลที่กลมกลืนระหว่างการแสดงออกทางศิลปะและการใช้งานจริง`,
-      desc2: `ตั้งแต่การเลือกวัสดุระดับพรีเมียมไปจนถึงขั้นตอนการตกแต่งขั้นสุดท้าย ${collection.name} รวบรวมปรัชญาของ MOGEN เรื่อง 'Minimalist Luxury' ซึ่งทุกรายละเอียดล้วนมีจุดประสงค์ และทุกส่วนโค้งบอกเล่าเรื่องราวของความแม่นยำ`,
-      elements: 'องค์ประกอบของซีรีส์',
-      objects: 'วัตถุในคอลเลกชันนี้',
-      items: 'รายการ',
-      view: 'ดูรายละเอียด',
-      empty: 'ชิ้นงานเพิ่มเติมจากคอลเลกชันนี้จะเปิดตัวในเร็วๆ นี้'
+      meta: '',
+      concept: '',
+      desc1: ``,
+      desc2: ``,
+      elements: '',
+      objects: '',
+      items: '',
+      view: '',
+      empty: ''
     },
     en: {
-      meta: 'Collection',
-      concept: 'Concept & Philosophy',
-      desc1: `The ${collection.name} represents our commitment to excellence in bathroom design. Every piece in this collection has been meticulously crafted to ensure a harmonious balance between artistic expression and practical utility.`,
-      desc2: `From the selection of premium materials to the final finishing touches, ${collection.name} embodies the MOGEN philosophy of 'Minimalist Luxury'—where every detail serves a purpose and every curve tells a story of precision.`,
-      elements: 'Series Elements',
-      objects: 'Objects in this Collection',
-      items: 'ITEMS',
-      view: 'View Details',
-      empty: 'More pieces from this collection will be unveiled soon.'
+      meta: '',
+      concept: '',
+      desc1: ``,
+      desc2: ``,
+      elements: '',
+      objects: '',
+      items: '',
+      view: '',
+      empty: ''
     }
   }[locale as 'en' | 'th'];
 

@@ -12,8 +12,7 @@ ENV PATH=/opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
 COPY . .
-ENV NODE_OPTIONS=--max-old-space-size=2048
+ENV NODE_OPTIONS=--max-old-space-size=1024
 
 EXPOSE 1337
-# Build on startup instead of during image creation to save build resources
-CMD ["sh", "-c", "npm run build && npm run develop"]
+CMD ["npm", "run", "develop"]

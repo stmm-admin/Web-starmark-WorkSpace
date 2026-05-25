@@ -1,4 +1,11 @@
 import { getDictionary } from '@/dictionaries/get-dictionary';
+import { Kanit } from 'next/font/google';
+
+const kanit = Kanit({
+  weight: '300',
+  subsets: ['latin', 'thai'],
+  display: 'swap',
+});
 
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -7,77 +14,211 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   const t = {
     th: {
       title: 'ติดต่อเรา',
-      desc: 'หากคุณมีคำถามเกี่ยวกับผลิตภัณฑ์ของเรา หรือต้องการความช่วยเหลือในการวางแผนห้องน้ำของคุณ ทีมผู้เชี่ยวชาญของเราพร้อมให้คำปรึกษา',
-      addressTitle: 'สำนักงานใหญ่',
-      address: 'เลขที่ 2 ซอยลำลูกกา 53 ถนนลำลูกกา ตำบลลาดสวาย อำเภอลำลูกกา จังหวัดปทุมธานี 12150',
-      showroomTitle: 'MOGEN Place Showroom',
-      showroomDesc: 'สัมผัสประสบการณ์สินค้าจริงและรับคำปรึกษาจากดีไซน์เนอร์',
+      subtitle: 'พร้อมให้คำปรึกษาและออกแบบพื้นที่ทำงานที่เหมาะสมสำหรับองค์กรของคุณ',
+      contactMeta: 'ข้อมูลติดต่อ',
+      getInTouch: 'ติดต่อเรา',
+      quoteTitle: 'ขอใบเสนอราคา',
+      quoteDesc: 'กรอกข้อมูลด้านล่าง ทีมงานของเราจะติดต่อกลับภายใน 24 ชั่วโมง',
+      addressTitle: 'ที่อยู่',
+      address: 'กรุงเทพมหานคร ประเทศไทย',
+      showroomTitle: 'โชว์รูม',
+      showroomDesc: 'รับคำแนะนำจากผู้เชี่ยวชาญและชมสินค้าได้ที่โชว์รูม',
       phone: 'โทรศัพท์',
       email: 'อีเมล',
       hours: 'เวลาทำการ',
-      hoursDesc: 'จันทร์ - เสาร์: 08:30 - 17:30 น.'
+      hoursDesc: 'จันทร์-ศุกร์: 8:30-17:30 | เสาร์: 9:00-13:00',
+      followUs: 'ติดตามเรา',
+      facebook: 'Facebook',
+      fullName: 'ชื่อ-นามสกุล',
+      company: 'บริษัท/องค์กร',
+      phonePlaceholder: '08X-XXX-XXXX',
+      emailPlaceholder: 'email@company.com',
+      interest: 'สินค้าที่สนใจ',
+      interestPlaceholder: 'เลือกกลุ่มสินค้า',
+      details: 'รายละเอียดเพิ่มเติม',
+      detailsPlaceholder: 'ระบุขนาดพื้นที่ จำนวนที่นั่ง หรือความต้องการพิเศษ...',
+      sendQuote: 'ส่งใบเสนอราคา',
+      required: 'จำเป็น'
     },
     en: {
       title: 'Contact Us',
-      desc: 'Whether you have a question about our products or need assistance planning your bathroom, our team of experts is here to help.',
-      addressTitle: 'Headquarters',
-      address: '2 Soi Lam Luk Ka 53, Lam Luk Ka Road, Lat Sawai, Lam Luk Ka, Pathum Thani 12150, Thailand',
-      showroomTitle: 'MOGEN Place Showroom',
-      showroomDesc: 'Experience our products in person and get expert design advice.',
+      subtitle: 'We are ready to help you design and plan the ideal workspace for your organization.',
+      contactMeta: 'Contact Info',
+      getInTouch: 'Get in Touch',
+      quoteTitle: 'Request a Quotation',
+      quoteDesc: 'Fill out the form and our team will contact you within 24 hours.',
+      addressTitle: 'Address',
+      address: 'Bangkok, Thailand',
+      showroomTitle: 'Showroom',
+      showroomDesc: 'Visit our showroom for product consultation and inspiration.',
       phone: 'Phone',
       email: 'Email',
       hours: 'Opening Hours',
-      hoursDesc: 'Monday - Saturday: 08:30 - 17:30'
+      hoursDesc: 'Mon-Fri: 8:30-17:30 | Sat: 9:00-13:00',
+      followUs: 'Follow Us',
+      facebook: 'Facebook',
+      fullName: 'Full Name',
+      company: 'Company',
+      phonePlaceholder: '08X-XXX-XXXX',
+      emailPlaceholder: 'email@company.com',
+      interest: 'Product Interest',
+      interestPlaceholder: 'Select a product group',
+      details: 'Additional Details',
+      detailsPlaceholder: 'Tell us about your workspace size, seat quantity, or special requirements...',
+      sendQuote: 'Submit Request',
+      required: 'required'
     }
   }[locale as 'en' | 'th'];
 
   return (
-    <div className="bg-white min-h-screen">
-      <div className="container mx-auto px-6 lg:px-12 py-24">
-        <div className="max-w-4xl mb-24">
-          <span className="text-meta mb-6 block uppercase tracking-widest text-primary">{dict.navigation.contact}</span>
-          <h1 className="heading-section">{t.title}</h1>
-          <p className="text-secondary text-lg font-light leading-relaxed max-w-2xl">
-            {t.desc}
-          </p>
+    <div className={`${kanit.className} bg-[#f8f9fb] min-h-screen`}>
+      <section className="bg-primary text-white py-16 lg:py-20">
+        <div className="container mx-auto px-6 lg:px-12">
+          <span className="text-[10px] uppercase tracking-[0.34em] text-white/70 block mb-4">{dict.navigation.contact}</span>
+          <h1 className="text-4xl md:text-5xl font-light mb-4">{t.title}</h1>
+          <p className="text-white/80 max-w-3xl text-base lg:text-lg">{t.subtitle}</p>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
-          <div className="space-y-16">
-            <div className="border-t border-neutral-100 pt-12">
-              <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-6">{t.addressTitle}</h3>
-              <p className="text-secondary font-light leading-relaxed max-w-sm">
-                {t.address}
-              </p>
-            </div>
+      <section className="py-14 lg:py-20">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+            <aside className="lg:col-span-4 bg-white border border-neutral-200 rounded-3xl p-7 lg:p-8 shadow-sm">
+              <span className="text-[10px] uppercase tracking-[0.3em] font-semibold text-[#b38f3f] block mb-4">{t.contactMeta}</span>
+              <h2 className="text-3xl font-light text-primary mb-8">{t.getInTouch}</h2>
 
-            <div className="border-t border-neutral-100 pt-12">
-              <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-6">{t.showroomTitle}</h3>
-              <p className="text-secondary font-light leading-relaxed mb-4">
-                {t.showroomDesc}
-              </p>
-              <p className="text-primary font-serif italic">MOGEN Place, Lam Luk Ka Khlong 5</p>
-            </div>
-          </div>
-
-          <div className="space-y-16">
-            <div className="border-t border-neutral-100 pt-12">
-              <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-6">{t.phone} & {t.email}</h3>
-              <div className="space-y-4">
-                <p className="text-2xl font-serif text-primary italic">02-150-9708</p>
-                <p className="text-lg text-secondary font-light">info@mogen.co.th</p>
+              <div className="space-y-6">
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-secondary mb-2">{t.phone}</p>
+                  <p className="text-primary text-xl font-medium">02-123-4567</p>
+                </div>
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-secondary mb-2">{t.email}</p>
+                  <p className="text-primary text-lg">info@starmarkworkspace.com</p>
+                </div>
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-secondary mb-2">{t.addressTitle}</p>
+                  <p className="text-secondary leading-relaxed">{t.address}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-secondary mb-2">{t.showroomTitle}</p>
+                  <p className="text-secondary leading-relaxed">{t.showroomDesc}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-secondary mb-2">{t.hours}</p>
+                  <p className="text-secondary leading-relaxed">{t.hoursDesc}</p>
+                </div>
               </div>
-            </div>
 
-            <div className="border-t border-neutral-100 pt-12">
-              <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-6">{t.hours}</h3>
-              <p className="text-secondary font-light leading-relaxed">
-                {t.hoursDesc}
-              </p>
+              <div className="mt-10 pt-6 border-t border-neutral-200">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-secondary mb-4">{t.followUs}</p>
+                <a
+                  href="https://www.facebook.com/starmarkworkspace"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center rounded-lg bg-primary hover:bg-primary/90 text-white px-5 py-3 text-sm font-medium transition-colors"
+                >
+                  {t.facebook}
+                </a>
+              </div>
+            </aside>
+
+            <div className="lg:col-span-8 bg-white border border-neutral-200 rounded-3xl p-7 lg:p-10 shadow-sm">
+              <h2 className="text-3xl font-light text-primary mb-3">{t.quoteTitle}</h2>
+              <p className="text-secondary mb-8">{t.quoteDesc}</p>
+
+              <form className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label htmlFor="fullName" className="block text-sm text-primary font-medium mb-2">
+                      {t.fullName} <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      id="fullName"
+                      name="fullName"
+                      type="text"
+                      required
+                      className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      placeholder={t.fullName}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="company" className="block text-sm text-primary font-medium mb-2">{t.company}</label>
+                    <input
+                      id="company"
+                      name="company"
+                      type="text"
+                      className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      placeholder={t.company}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label htmlFor="phone" className="block text-sm text-primary font-medium mb-2">
+                      {t.phone} <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      required
+                      className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      placeholder={t.phonePlaceholder}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm text-primary font-medium mb-2">{t.email}</label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      placeholder={t.emailPlaceholder}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="interest" className="block text-sm text-primary font-medium mb-2">{t.interest}</label>
+                  <select
+                    id="interest"
+                    name="interest"
+                    className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>{t.interestPlaceholder}</option>
+                    <option value="workstation">{locale === 'th' ? 'Workstation' : 'Workstation'}</option>
+                    <option value="executive-desk">{locale === 'th' ? 'โต๊ะผู้บริหาร' : 'Executive Desk'}</option>
+                    <option value="meeting-table">{locale === 'th' ? 'โต๊ะประชุม' : 'Meeting Table'}</option>
+                    <option value="storage">{locale === 'th' ? 'ตู้เก็บเอกสาร' : 'Storage'}</option>
+                    <option value="other">{locale === 'th' ? 'อื่นๆ' : 'Other'}</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="details" className="block text-sm text-primary font-medium mb-2">{t.details}</label>
+                  <textarea
+                    id="details"
+                    name="details"
+                    rows={5}
+                    className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    placeholder={t.detailsPlaceholder}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full md:w-auto inline-flex items-center justify-center rounded-xl bg-primary hover:bg-primary/90 text-white px-8 py-3.5 text-sm font-semibold tracking-wide transition-colors"
+                >
+                  {t.sendQuote}
+                </button>
+              </form>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

@@ -8,32 +8,51 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const dict = await getDictionary(locale as 'en' | 'th');
   const about = await getAbout(locale);
 
-  const timeline = about?.timeline?.length ? about.timeline : [
+  const highlights = [
     {
-      year: '2004',
-      title: locale === 'th' ? 'จุดเริ่มต้นของ MOGEN' : 'The Beginning of MOGEN',
-      description: locale === 'th' ? 'เปิดตัวผลิตภัณฑ์สุขภัณฑ์ภายใต้ชื่อ MOGEN วางเป้าหมายยกระดับคุณภาพชีวิตผู้คน ด้วยการออกแบบที่ผสมผสานฟังก์ชัน ความสวยงาม และความปลอดภัย' : 'Launched sanitaryware products under the name MOGEN with a goal to enhance quality of life through design that blends function, beauty, and safety.'
+      value: '500+',
+      titleTh: 'โครงการที่สำเร็จ',
+      titleEn: 'Completed Projects',
     },
     {
-      year: '2005–2010',
-      title: locale === 'th' ? 'การเติบโตและการสร้างรากฐาน' : 'Growth and Foundation',
-      description: locale === 'th' ? 'ขยายสายการผลิตและเพิ่มกำลังการผลิต เปิดอาคารสำนักงานใหญ่ พร้อมศูนย์บริการหลังการขาย เพื่อดูแลลูกค้าอย่างครบวงจร เริ่มขยายสู่โครงการอสังหาฯ ขนาดใหญ่' : 'Expanded production lines and increased capacity. Opened headquarters with a full after-sales service center. Began expansion into large real estate projects.'
+      value: '15+',
+      titleTh: 'ปีประสบการณ์',
+      titleEn: 'Years of Experience',
     },
     {
-      year: '2011–2015',
-      title: locale === 'th' ? 'สู่เวทีการออกแบบและมาตรฐานระดับสากล' : 'International Design & Standards',
-      description: locale === 'th' ? 'เปิด Showroom แห่งแรกที่อาคาร STWO เข้าร่วมงานสถาปนิก (Architect Expo) และขยายเครือข่ายตัวแทนจำหน่ายทั่วประเทศ พร้อมรับการรับรองมาตรฐานสากล' : 'Opened the first showroom at STWO building. Participated in Architect Expo and expanded the dealer network nationwide while receiving international quality certifications.'
+      value: '50+',
+      titleTh: 'คอลเลกชันสินค้า',
+      titleEn: 'Product Collections',
     },
     {
-      year: '2016–2020',
-      title: locale === 'th' ? 'นวัตกรรมและการเปลี่ยนแปลงครั้งสำคัญ' : 'Innovation & Transformation',
-      description: locale === 'th' ? 'เปิดตัวสินค้าประหยัดน้ำและพลังงาน และสร้างความโดดเด่นด้วยอ่างล้างหน้าพร้อมตู้เฟอร์นิเจอร์กันน้ำ 100% รายแรกในประเทศไทย' : 'Launched water and energy-saving products. Stood out with 100% waterproof bathroom furniture cabinets, a first in Thailand.'
+      value: '1000+',
+      titleTh: 'ลูกค้าที่ไว้วางใจ',
+      titleEn: 'Satisfied Clients',
+    },
+  ];
+
+  const teams = [
+    {
+      titleTh: 'ทีมออกแบบ',
+      titleEn: 'Design Team',
+      image: getStrapiMedia('/uploads/meeting_table_5aa5a510_4566299833.webp'),
+      descriptionTh: 'นักออกแบบที่ดูแลทุกรายละเอียดตั้งแต่แนวคิด วัสดุ ไปจนถึงบรรยากาศของพื้นที่',
+      descriptionEn: 'Design specialists who shape concepts, materials, and the atmosphere of each space.',
     },
     {
-      year: '2021–ปัจจุบัน',
-      title: locale === 'th' ? 'ก้าวสู่ยุคดิจิทัลและการขยายตลาด' : 'Digital Era & Market Expansion',
-      description: locale === 'th' ? 'ครบรอบ 21 ปี MOGEN ร่วมมือกับบริษัท ศรีไทยซุปเปอร์แวร์ พัฒนาผลิตภัณฑ์ใหม่ เปิดตัวเว็บไซต์ E-Commerce และ Showroom MOGEN Place ที่ลำลูกกา คลอง 5' : 'Celebrated MOGEN’s 21st anniversary. Partnered with Srithai Superware to develop new products. Launched E-Commerce website and MOGEN Place showroom at Lam Luk Ka Khlong 5.'
-    }
+      titleTh: 'ทีมขายและที่ปรึกษา',
+      titleEn: 'Sales & Consulting',
+      image: getStrapiMedia('/uploads/Workstation_and_Chair_c824bce892.JPG'),
+      descriptionTh: 'ให้คำแนะนำอย่างใกล้ชิด เพื่อช่วยเลือกสินค้าและวางแผนงานให้เหมาะกับทุกโปรเจกต์',
+      descriptionEn: 'Guidance and product advice tailored to each project and requirement.',
+    },
+    {
+      titleTh: 'ทีมติดตั้ง',
+      titleEn: 'Installation Team',
+      image: getStrapiMedia('/uploads/kerui_desk_fdad1b19_3bc9c442f7.webp'),
+      descriptionTh: 'ดูแลการติดตั้งด้วยมาตรฐานที่พิถีพิถัน เพื่อให้ผลงานเรียบร้อยและพร้อมใช้งาน',
+      descriptionEn: 'Careful installation with a quality-first process for a clean and ready finish.',
+    },
   ];
 
   const philosophies = about?.philosophies?.length ?
@@ -91,9 +110,9 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
           <span className="text-white text-[10px] uppercase tracking-[0.5em] mb-6 animate-fade-in font-bold">
-            {about?.hero?.subtitle || 'Over 21 Years of Excellence'}
+            {/* {about?.hero?.subtitle || 'Over 21 Years of Excellence'} */}
           </span>
-          <h1 className="text-white text-5xl md:text-7xl font-serif italic mb-4">{about?.hero?.title || (locale === 'th' ? 'เกี่ยวกับ MOGEN' : 'About MOGEN')}</h1>
+          <h1 className="text-white text-5xl md:text-7xl font-serif italic mb-4">{about?.hero?.title || (locale === 'th' ? 'เกี่ยวกับ Starmark' : 'About Starmark')}</h1>
           <div className="w-24 h-px bg-white/50 mt-8" />
         </div>
       </section>
@@ -101,19 +120,24 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       {/* Brand Story Section */}
       <section className="py-32 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="max-w-4xl mx-auto text-center">
-            <span className="text-meta mb-6 block uppercase tracking-widest text-primary">{about?.story?.meta || dict.about.meta}</span>
-            <h2 className="text-4xl font-serif italic text-primary mb-12">{about?.story?.title || dict.about.title}</h2>
-            <p className="text-secondary text-lg font-light leading-relaxed mb-8">
-              {about?.story?.description_1 || (locale === 'th'
-                ? 'MOGEN เป็นแบรนด์สุขภัณฑ์และเฟอร์นิเจอร์ห้องน้ำชั้นนำของไทย ก่อตั้งขึ้นด้วยความมุ่งมั่นในการยกระดับคุณภาพชีวิตของผู้คน ผ่านการออกแบบที่มีเอกลักษณ์ ผสานนวัตกรรมและความเป็นมิตรต่อสิ่งแวดล้อม ผลิตภัณฑ์ของ MOGEN ได้รับการพัฒนาเพื่อตอบโจทย์ทั้งด้านฟังก์ชัน ความสวยงาม และมาตรฐานความปลอดภัยระดับสากล'
-                : 'MOGEN is a leading Thai sanitaryware and bathroom furniture brand. Founded with a commitment to enhancing quality of life through unique design, innovation, and environmental friendliness. MOGEN products are developed to meet international standards for function, beauty, and safety.')}
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-4xl font-serif italic text-primary mb-6">{dict.about.title}</h2>
+            <div className="w-16 h-px bg-primary/20 mx-auto mb-12" />
+            <p className="text-secondary text-lg font-light leading-[1.9] mb-6">
+              {about?.vision?.statement || (locale === 'th'
+                ? ''
+                : 'Starmark Work Space was founded on the belief that a well-designed work environment can inspire creativity, boost productivity, and reflect the professionalism of an organization. With over 15 years of experience in the office furniture industry, we have developed products that seamlessly blend aesthetics, durability, and functionality — crafted by a team of professional designers and engineers to serve leading organizations across the country.')}
             </p>
-            <p className="text-secondary text-lg font-light leading-relaxed">
-              {about?.story?.description_2 || (locale === 'th'
-                ? 'ด้วยประสบการณ์กว่า 21 ปี MOGEN ไม่เพียงแต่สร้างสรรค์สินค้า แต่ยังเป็นพันธมิตรที่เชื่อถือได้ของทั้งลูกค้ารายบุคคล ดีเวลลอปเปอร์ สถาปนิก และผู้รับเหมามืออาชีพ'
-                : 'With over 21 years of experience, MOGEN not only creates products but is also a trusted partner for individual customers, developers, architects, and professional contractors.')}
-            </p>
+            {about?.story?.description_1 && (
+              <p className="text-secondary text-lg font-light leading-[1.9] mb-6">
+                {about.story.description_1}
+              </p>
+            )}
+            {about?.story?.description_2 && (
+              <p className="text-secondary text-lg font-light leading-[1.9]">
+                {about.story.description_2}
+              </p>
+            )}
           </div>
         </div>
       </section>
@@ -121,18 +145,9 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       {/* Vision & Philosophy */}
       <section className="py-32 bg-neutral-50">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center mb-32">
-            <div className="lg:col-span-5">
-              <span className="text-meta mb-4 block">{about?.vision?.meta || 'Vision'}</span>
-              <h2 className="text-5xl font-serif italic text-primary mb-8 uppercase tracking-tight">{about?.vision?.title || (locale === 'th' ? 'วิสัยทัศน์' : 'Vision')}</h2>
-            </div>
-            <div className="lg:col-span-7">
-              <p className="text-2xl font-serif text-primary leading-relaxed italic border-l-4 border-primary/20 pl-8">
-                {about?.vision?.statement || (locale === 'th'
-                  ? '“มุ่งเป็นผู้นำด้านผลิตภัณฑ์นวัตกรรมและเป็นมิตรต่อสิ่งแวดล้อม พร้อมมอบการบริการที่ดีที่สุด ครอบคลุมทุกโซลูชันสำหรับคนทุกเจเนอเรชัน”'
-                  : '“To be a leader in innovative and eco-friendly products, providing the best service and comprehensive solutions for every generation.”')}
-              </p>
-            </div>
+          <div className="mb-32 text-center">
+            <h2 className="text-5xl font-serif italic text-primary uppercase tracking-tight">{about?.vision?.title || (locale === 'th' ? 'วิสัยทัศน์' : 'Vision')}</h2>
+            <div className="w-16 h-px bg-primary/20 mx-auto mt-6" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -148,37 +163,51 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="py-32 bg-white overflow-hidden">
+      {/* Highlights & Team */}
+      <section className="bg-[#f7f4ee] py-24 lg:py-32">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="text-center mb-24">
-            <span className="text-meta mb-4 block uppercase tracking-widest text-primary">Our Journey</span>
-            <h2 className="text-4xl font-serif italic text-primary">{about?.timeline ? (locale === 'th' ? 'เส้นทางแห่งความสำเร็จ' : 'Our Journey') : (locale === 'th' ? 'เส้นทางแห่งความสำเร็จ' : 'Our Journey')}</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-20">
+            {highlights.map((item) => (
+              <div key={item.value} className="rounded-3xl bg-white/90 border border-[#eadfcd] shadow-sm px-6 py-10 text-center backdrop-blur-sm">
+                <div className="text-4xl lg:text-5xl font-serif italic text-[#c89b2c] leading-none">{item.value}</div>
+                <div className="mt-4 text-sm font-semibold text-primary">{locale === 'th' ? item.titleTh : item.titleEn}</div>
+                <div className="mt-2 text-[11px] uppercase tracking-[0.28em] text-secondary">{locale === 'th' ? item.titleEn : item.titleTh}</div>
+              </div>
+            ))}
           </div>
 
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-neutral-200 hidden lg:block" />
+          <div className="max-w-3xl mx-auto text-center mb-14">
+            <span className="text-meta mb-4 block uppercase tracking-[0.35em] text-[#c89b2c]">{locale === 'th' ? 'ทีมงาน' : 'Our Team'}</span>
+            <h2 className="text-4xl md:text-5xl font-serif italic text-primary mb-5">{locale === 'th' ? 'ทีมงานที่อยู่เบื้องหลังทุกผลงาน' : 'The people behind every project'}</h2>
+            <p className="text-secondary text-lg leading-relaxed">
+              {locale === 'th'
+                ? 'ทีมงานของเราทำงานร่วมกันอย่างใกล้ชิด ตั้งแต่การออกแบบ การให้คำปรึกษา ไปจนถึงการติดตั้ง เพื่อให้ทุกพื้นที่ออกมาสวยงามและใช้งานได้จริง'
+                : 'Our team works closely from design and consulting to installation, ensuring every space feels refined and practical.'}
+            </p>
+          </div>
 
-            <div className="space-y-24">
-              {timeline.map((item, idx) => (
-                <div key={idx} className={`flex flex-col lg:flex-row items-center ${idx % 2 === 0 ? '' : 'lg:flex-row-reverse'}`}>
-                  <div className="lg:w-1/2 w-full px-12 text-center lg:text-right">
-                    <div className={`${idx % 2 === 0 ? 'lg:text-right' : 'lg:text-left'}`}>
-                      <span className="text-5xl font-serif italic text-primary/20 mb-4 block">{item.year}</span>
-                      <h3 className="text-2xl font-serif text-primary mb-4 italic">{item.title}</h3>
-                      <p className="text-secondary font-light leading-relaxed max-w-md mx-auto lg:mx-0 inline-block">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="relative flex items-center justify-center w-12 h-12 my-8 lg:my-0">
-                    <div className="w-3 h-3 bg-primary rounded-full z-10" />
-                    <div className="absolute w-8 h-8 border border-primary/20 rounded-full animate-ping" />
-                  </div>
-                  <div className="lg:w-1/2 w-full px-12" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+            {teams.map((team) => (
+              <article key={team.titleEn} className="group rounded-[2rem] bg-white border border-[#efe5d7] shadow-[0_18px_50px_rgba(40,30,20,0.06)] p-6 lg:p-8">
+                <div className="overflow-hidden rounded-[1.75rem] bg-[#f3eee4] aspect-[4/3] relative">
+                  <Image
+                    src={team.image || 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1200'}
+                    alt={locale === 'th' ? team.titleTh : team.titleEn}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
-              ))}
-            </div>
+                <div className="pt-7 text-center">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-[#f7f2e8] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.35em] text-[#9c7b2f]">
+                    {locale === 'th' ? team.titleTh : team.titleEn}
+                  </div>
+                  <h3 className="mt-5 text-2xl font-serif italic text-primary">{locale === 'th' ? team.titleTh : team.titleEn}</h3>
+                  <p className="mt-4 text-secondary leading-relaxed text-sm lg:text-base">
+                    {locale === 'th' ? team.descriptionTh : team.descriptionEn}
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 
@@ -13,8 +14,15 @@ export function Header() {
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center h-24">
           <div className="flex-shrink-0 flex items-center gap-8">
-            <Link href={`/${locale}`} className="text-3xl font-serif tracking-tighter text-primary">
-              MOGEN
+            <Link href={`/${locale}`} className="inline-flex items-center" aria-label="Work Space Home">
+              <Image
+                src="/logo-starmark.png"
+                alt="Starmark Work Space"
+                width={180}
+                height={48}
+                className="h-12 w-auto object-contain"
+                priority
+              />
             </Link>
           </div>
 
@@ -27,6 +35,9 @@ export function Header() {
             </Link>
             <Link href={`/${locale}/about`} className="text-[12px] uppercase tracking-[0.2em] font-semibold text-primary/70 hover:text-primary transition-colors">
               About
+            </Link>
+            <Link href={`/${locale}/projects`} className="text-[12px] uppercase tracking-[0.2em] font-semibold text-primary/70 hover:text-primary transition-colors">
+              Project
             </Link>
             <Link href={`/${locale}/contact`} className="text-[12px] uppercase tracking-[0.2em] font-semibold text-primary/70 hover:text-primary transition-colors">
               Contact

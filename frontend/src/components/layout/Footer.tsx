@@ -1,64 +1,104 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import { Prompt } from 'next/font/google';
+
+const promptThai = Prompt({
+  subsets: ['thai'],
+  weight: ['300', '400', '500', '600'],
+  display: 'swap',
+});
 
 export function Footer() {
   return (
-    <footer className="bg-white border-t border-neutral-100 mt-32">
-      <div className="container mx-auto px-6 lg:px-12 py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16">
-          <div className="lg:col-span-2">
-            <Link href="/" className="text-3xl font-serif tracking-tighter text-primary">
-              MOGEN
+    <footer className="mt-20 border-t border-[#eadfce] bg-white text-[#2d4d7f] font-sans">
+      <div className="container mx-auto px-6 lg:px-12 py-10 lg:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-10">
+          <div>
+            <Link href="/">
+              <Image
+                src="/logo-starmark.png"
+                alt="Starmark Work Space"
+                width={180}
+                height={48}
+                className="h-12 w-auto object-contain"
+                priority
+              />
             </Link>
-            <p className="mt-8 text-secondary text-sm leading-relaxed max-w-sm font-light">
-              Elevating the bathroom experience with premium, minimal, and European-inspired sanitaryware. Precision in every detail, clarity in every form.
+
+            <p lang="th" className={`${promptThai.className} mt-4 text-[16px] leading-[1.45] text-[#4d668f] max-w-xs font-light`}>
+              เฟอร์นิเจอร์สำนักงานระดับพรีเมียม ออกแบบเพื่อองค์กรชั้นนำ ด้วยคุณภาพและดีไซน์ที่เหนือกว่า
             </p>
-            <div className="mt-10 flex space-x-6">
-              {/* Simple icons placeholders */}
-              <div className="w-5 h-5 bg-neutral-200 rounded-full" />
-              <div className="w-5 h-5 bg-neutral-200 rounded-full" />
-              <div className="w-5 h-5 bg-neutral-200 rounded-full" />
+
+            <div className="mt-5 flex items-center gap-3">
+              <a
+                href="https://www.facebook.com/starmarkworkspace"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#fffdf9] border border-[#e1d5c7] text-[#3e649a] hover:bg-[#f5eee3] transition-colors text-sm"
+                aria-label="Facebook"
+              >
+                f
+              </a>
+              <a
+                href="#"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#fffdf9] border border-[#e1d5c7] text-[#3aa269] hover:bg-[#eef8ef] transition-colors text-[10px]"
+                aria-label="Line"
+              >
+                Line
+              </a>
             </div>
           </div>
-          
+
           <div>
-            <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-8">Products</h3>
-            <ul className="space-y-4">
-              <li><Link href="/products/washbasins" className="text-sm text-secondary hover:text-primary transition-colors font-light">Washbasins</Link></li>
-              <li><Link href="/products/toilets" className="text-sm text-secondary hover:text-primary transition-colors font-light">Toilets</Link></li>
-              <li><Link href="/products/bathtubs" className="text-sm text-secondary hover:text-primary transition-colors font-light">Bathtubs</Link></li>
-              <li><Link href="/products/faucets" className="text-sm text-secondary hover:text-primary transition-colors font-light">Faucets</Link></li>
+            <h3 lang="th" className={`${promptThai.className} text-[24px] font-light text-black mb-3`}>กลุ่มสินค้า</h3>
+            <ul className="space-y-1.5 text-[15px] font-light leading-snug text-[#2e548b]">
+              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">Executive Desk &amp; Chair</Link></li>
+              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">Workstation &amp; Chair</Link></li>
+              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">Meeting Table &amp; Conference</Link></li>
+              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">KERUI Series</Link></li>
+              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">AITE Series</Link></li>
+              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">YOUMO Series</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-8">Professional</h3>
-            <ul className="space-y-4">
-              <li><Link href="/architects" className="text-sm text-secondary hover:text-primary transition-colors font-light">Architects</Link></li>
-              <li><Link href="/installers" className="text-sm text-secondary hover:text-primary transition-colors font-light">Installers</Link></li>
-              <li><Link href="/downloads" className="text-sm text-secondary hover:text-primary transition-colors font-light">Technical Data</Link></li>
-              <li><Link href="/bim" className="text-sm text-secondary hover:text-primary transition-colors font-light">BIM Data</Link></li>
+            <h3 lang="th" className={`${promptThai.className} text-[24px] font-light text-black mb-3`}>บริษัท</h3>
+            <ul className="space-y-1.5 text-[15px] font-light leading-snug text-[#2e548b]">
+              <li lang="th" className={promptThai.className}><Link href="/about" className="hover:text-[#0f2f61] transition-colors">เกี่ยวกับเรา</Link></li>
+              <li lang="th" className={promptThai.className}><Link href="/projects" className="hover:text-[#0f2f61] transition-colors">โปรเจคตัวอย่าง</Link></li>
+              <li lang="th" className={promptThai.className}><Link href="/collections" className="hover:text-[#0f2f61] transition-colors">คอลเลกชัน 2026</Link></li>
+              <li lang="th" className={promptThai.className}><Link href="/downloads" className="hover:text-[#0f2f61] transition-colors">ดาวน์โหลด Catalog</Link></li>
+              <li lang="th" className={promptThai.className}><Link href="/contact" className="hover:text-[#0f2f61] transition-colors">ติดต่อเรา</Link></li>
+              <li lang="th" className={promptThai.className}><Link href="/contact" className="hover:text-[#0f2f61] transition-colors">ขอใบเสนอราคา</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-8">Support</h3>
-            <ul className="space-y-4">
-              <li><Link href="/about" className="text-sm text-secondary hover:text-primary transition-colors font-light">About MOGEN</Link></li>
-              <li><Link href="/contact" className="text-sm text-secondary hover:text-primary transition-colors font-light">Contact</Link></li>
-              <li><Link href="/dealers" className="text-sm text-secondary hover:text-primary transition-colors font-light">Store Locator</Link></li>
-              <li><Link href="/faq" className="text-sm text-secondary hover:text-primary transition-colors font-light">FAQ</Link></li>
+            <h3 lang="th" className={`${promptThai.className} text-[24px] font-light text-black mb-3`}>ติดต่อเรา</h3>
+            <ul className="space-y-2.5 text-[15px] font-light text-[#2e548b] leading-snug">
+              <li>
+                <span className="text-[#b48a2a] mr-2">✆</span>
+                02-123-4567
+                <div lang="th" className={`${promptThai.className} text-[13px] text-[#7f95b3] mt-0.5`}>จันทร์-ศุกร์ 8:30-17:30</div>
+              </li>
+              <li>
+                <span className="text-[#b48a2a] mr-2">✉</span>
+                info@starmarkworkspace.com
+              </li>
+              <li lang="th" className={promptThai.className}>
+                <span className="text-[#b48a2a] mr-2">⌖</span>
+                กรุงเทพมหานคร ประเทศไทย
+              </li>
             </ul>
           </div>
         </div>
-        
-        <div className="mt-24 pt-8 border-t border-neutral-100 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-[10px] uppercase tracking-widest text-neutral-400">
-            &copy; {new Date().getFullYear()} MOGEN International. All rights reserved.
-          </p>
-          <div className="flex space-x-8">
-            <Link href="/legal" className="text-[10px] uppercase tracking-widest text-neutral-400 hover:text-primary transition-colors">Legal Notice</Link>
-            <Link href="/privacy" className="text-[10px] uppercase tracking-widest text-neutral-400 hover:text-primary transition-colors">Privacy Policy</Link>
-            <Link href="/cookies" className="text-[10px] uppercase tracking-widest text-neutral-400 hover:text-primary transition-colors">Cookie Settings</Link>
+
+        <div className="mt-8 pt-4 border-t border-[#e5d9c8] flex flex-col md:flex-row justify-between gap-3 text-[12px] text-[#7089ad]">
+          <p>© {new Date().getFullYear()} Starmark Work Space. All rights reserved.</p>
+          <div className="flex gap-6">
+            <Link href="/privacy" className="hover:text-[#284d86] transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-[#284d86] transition-colors">Terms</Link>
+            <Link href="/contact" className="hover:text-[#284d86] transition-colors">Support</Link>
           </div>
         </div>
       </div>

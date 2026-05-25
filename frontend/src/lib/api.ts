@@ -95,6 +95,30 @@ export interface Trending {
   hero_image: any;
 }
 
+export interface ProjectTag {
+  id?: string | number;
+  label: string;
+}
+
+export interface Project {
+  id: string | number;
+  documentId?: string;
+  year: string;
+  type: string;
+  name: string;
+  description?: string;
+  cover_image?: any;
+  tags?: ProjectTag[];
+}
+
+export interface ProjectsPageData {
+  id: string | number;
+  documentId?: string;
+  meta_text?: string;
+  title_text?: string;
+  description_text?: string;
+}
+
 /**
  * Helper to fetch from Strapi REST API
  */
@@ -235,6 +259,70 @@ const MOCK_TRENDINGS: Trending[] = [
   }
 ];
 
+const MOCK_PROJECTS_PAGE: ProjectsPageData = {
+  id: '1',
+  meta_text: 'PROJECT SHOWCASE',
+  title_text: 'Featured Projects',
+  description_text: 'A curated selection of completed office workspace projects for leading organizations.',
+};
+
+const MOCK_PROJECTS: Project[] = [
+  {
+    id: '1',
+    year: '2025',
+    type: 'EXECUTIVE SUITE',
+    name: 'SCB Head Office',
+    description: 'Premium executive office design with KERUI Executive Desk and TERENCE Chair.',
+    cover_image: { url: '/uploads/15_acc17a4dcd.JPG' },
+    tags: [{ label: 'KERUI Executive Desk' }, { label: 'TERENCE Chair' }],
+  },
+  {
+    id: '2',
+    year: '2025',
+    type: 'OPEN OFFICE',
+    name: 'True Corporation',
+    description: 'Large open-plan workspace with YOUMO Workstation setup for 200 staff members.',
+    cover_image: { url: '/uploads/Workstation_and_Chair_c824bce892.JPG' },
+    tags: [{ label: 'YOUMO Workstation' }, { label: 'F2311 Chair' }],
+  },
+  {
+    id: '3',
+    year: '2024',
+    type: 'BOARDROOM',
+    name: 'Kasikorn Bank',
+    description: 'Ultra luxury boardroom with a full KERUI meeting table setup (4000mm).',
+    cover_image: { url: '/uploads/meeting_table_5aa5a510_4566299833.webp' },
+    tags: [{ label: 'KERUI Meeting Table' }, { label: 'F2311 Chair' }],
+  },
+  {
+    id: '4',
+    year: '2024',
+    type: 'EXECUTIVE FLOOR',
+    name: 'PTT Group',
+    description: 'Executive floor fit-out with AITE Executive Desk and BERGEN chair series.',
+    cover_image: { url: '/uploads/4_513c874dc5.jfif' },
+    tags: [{ label: 'AITE Executive Desk' }, { label: 'BERGEN Chair' }],
+  },
+  {
+    id: '5',
+    year: '2024',
+    type: 'CONFERENCE CENTER',
+    name: 'Siam Piwat',
+    description: 'Conference center design featuring multiple AITE and KERUI meeting rooms.',
+    cover_image: { url: '/uploads/223_0bd04644e4.JPG' },
+    tags: [{ label: 'AITE Meeting Table' }, { label: 'KERUI Meeting Table' }],
+  },
+  {
+    id: '6',
+    year: '2023',
+    type: 'CORPORATE HQ',
+    name: 'CP Group',
+    description: 'Corporate HQ workspace design from executive offices to open collaboration zones.',
+    cover_image: { url: '/uploads/22_8c4615b898.JPG' },
+    tags: [{ label: 'KERUI' }, { label: 'AITE' }, { label: 'YOUMO' }, { label: 'MATT' }],
+  },
+];
+
 // --- API Methods ---
 
 export async function getCategories(locale: string = 'th'): Promise<Category[]> {
@@ -367,4 +455,14 @@ export async function getHomepage(locale: string = 'th'): Promise<Homepage> {
 export async function getTrendings(locale: string = 'th'): Promise<Trending[]> {
   const data = await fetchAPI(`/trending-1?populate=*&locale=${locale}`);
   return data || MOCK_TRENDINGS;
+}
+
+export async function getProjectsPageData(locale: string = 'th'): Promise<ProjectsPageData | null> {
+  const data = await fetchAPI(`/projects-page?populate=*&locale=${locale}`);
+  return data || MOCK_PROJECTS_PAGE;
+}
+
+export async function getProjects(locale: string = 'th'): Promise<Project[]> {
+  const data = await fetchAPI(`/projects?populate[0]=cover_image&populate[1]=tags&sort[0]=sort_order:asc&sort[1]=year:desc&locale=${locale}`);
+  return data || MOCK_PROJECTS;
 }

@@ -1,0 +1,29 @@
+{
+  "kind": "singleType",
+  "collectionName": "projects_pages",
+  "info": {
+    "singularName": "projects-page",
+    "pluralName": "projects-pages",
+    "displayName": "Projects Page",
+    "description": "Configuration for Projects landing page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "meta_text": {
+      "type": "string"
+    },
+    "title_text": {
+      "type": "string"
+    },
+    "description_text": {
+      "type": "text"
+    }
+  }
+}

@@ -11,13 +11,13 @@ export default async function CollectionsPage({ params }: { params: Promise<{ lo
     th: {
       meta: 'ซีรีส์งานออกแบบ',
       title: 'คอลเลกชันของเรา',
-      desc: 'สำรวจคอลเลกชันงานดีไซน์ที่คัดสรรมาอย่างดี ซึ่งรวบรวมรูปแบบและฟังก์ชันเข้าด้วยกันในภาษาแห่งสุนทรียภาพที่เป็นหนึ่งเดียว แต่ละคอลเลกชันแสดงถึงวิสัยทัศน์ที่เป็นเอกลักษณ์สำหรับห้องน้ำสมัยใหม่',
+      desc: 'คอลเลกชันเฟอร์นิเจอร์สำนักงานล่าสุดจาก Starmark Work Space ออกแบบเพื่อองค์กรแห่งอนาคต',
       explore: 'สำรวจซีรีส์'
     },
     en: {
       meta: 'Design Series',
       title: 'Our Collections',
-      desc: 'Explore our curated design series, where form meets function in a unified aesthetic language. Each collection represents a unique vision for the modern bathroom.',
+      desc: 'The latest office furniture collections from Starmark Work Space, designed for the organizations of the future.',
       explore: 'Explore Series'
     }
   }[locale as 'en' | 'th'];

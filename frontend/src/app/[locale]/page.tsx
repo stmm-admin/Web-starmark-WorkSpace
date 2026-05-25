@@ -162,15 +162,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </section>
       ))}
 
-      {/* CTA Section */}
-      <section className="py-40 bg-primary text-white text-center">
-        <div className="container mx-auto px-6">
-          <h2 className="text-4xl md:text-6xl font-serif mb-12 italic">{homepage.cta?.title || dict.home.cta.title}</h2>
-          <Link href={homepage.cta?.button_link || `/${locale}/contact`} className="btn-premium border border-white hover:bg-white hover:text-primary transition-all">
-            {homepage.cta?.button_text || dict.home.cta.button}
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }

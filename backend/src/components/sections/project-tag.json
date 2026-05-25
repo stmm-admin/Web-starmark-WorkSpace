@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_project_tags",
+  "info": {
+    "displayName": "project_tag",
+    "description": "Tag for project card"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}
