@@ -126,7 +126,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                     />
                   </div>
                 </div>
-                <span className="text-[10px] uppercase tracking-widest text-secondary font-semibold block mb-2">{product.collection}</span>
+                <span className="text-[10px] uppercase tracking-widest text-secondary font-semibold block mb-2">{product.collection?.name ?? ''}</span>
                 <h3 className="text-lg font-serif text-primary group-hover:text-secondary transition-colors">{product.name}</h3>
               </Link>
             ))}

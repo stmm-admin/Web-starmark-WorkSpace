@@ -39,8 +39,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       <div className="container mx-auto px-6 lg:px-12 py-12 md:py-24">
         {/* Breadcrumb */}
         <nav className="mb-12">
-          <Link href={`/${locale}/products/${product.category?.slug || product.category || ''}`} className="text-[10px] uppercase tracking-widest text-secondary hover:text-primary transition-colors flex items-center">
-            <span className="mr-2">&larr;</span> {t.back} {product.category?.name || product.category || t.products}
+          <Link href={`/${locale}/products/${product.category?.slug ?? ''}`} className="text-[10px] uppercase tracking-widest text-secondary hover:text-primary transition-colors flex items-center">
+            <span className="mr-2">&larr;</span> {t.back} {product.category?.name ?? t.products}
           </Link>
         </nav>
 
@@ -78,7 +78,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <div className="lg:col-span-5 flex flex-col">
             <div className="mb-12">
               <span className="text-meta mb-4 block">
-                {(product.collection?.name || product.collection) ? `${product.collection?.name || product.collection} ${t.series}` : `MOGEN ${t.series}`}
+                {product.collection?.name ? `${product.collection.name} ${t.series}` : `MOGEN ${t.series}`}
               </span>
               <h1 className="heading-section !mb-6">{product.name}</h1>
               <p className="text-secondary text-lg font-light leading-relaxed">

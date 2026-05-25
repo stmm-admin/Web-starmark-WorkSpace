@@ -1,6 +1,6 @@
 // Strapi API Logic for MOGEN
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://119.59.102.245';
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN; // Set this in your .env
 
 export interface Category {

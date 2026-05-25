@@ -69,7 +69,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
                   className="object-contain p-8 transition-transform duration-1000 group-hover:scale-110"
                 />
               </div>
-              <span className="text-meta text-[9px] mb-3 block">{product.collection?.name || product.collection}</span>
+              <span className="text-meta text-[9px] mb-3 block">{product.collection?.name ?? ''}</span>
               <h3 className="text-xl font-serif text-primary group-hover:text-secondary transition-colors mb-2">{product.name}</h3>
               <p className="text-sm text-secondary font-light line-clamp-1">{product.short_description}</p>
             </Link>
