@@ -40,11 +40,24 @@ export function Footer() {
                 f
               </a>
               <a
-                href="#"
+                href="https://lin.ee/mdbXXwN"
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#fffdf9] border border-[#e1d5c7] text-[#3aa269] hover:bg-[#eef8ef] transition-colors text-[10px]"
                 aria-label="Line"
               >
                 Line
+              </a>
+              <a
+                href="https://www.tiktok.com/@starmark.official"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#fffdf9] border border-[#e1d5c7] text-[#2d4d7f] hover:bg-[#f0f4fb] transition-colors"
+                aria-label="TikTok"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07Z"/>
+                </svg>
               </a>
             </div>
           </div>
@@ -67,7 +80,7 @@ export function Footer() {
               <li lang="th" className={promptThai.className}><Link href="/about" className="hover:text-[#0f2f61] transition-colors">เกี่ยวกับเรา</Link></li>
               <li lang="th" className={promptThai.className}><Link href="/projects" className="hover:text-[#0f2f61] transition-colors">โปรเจคตัวอย่าง</Link></li>
               <li lang="th" className={promptThai.className}><Link href="/collections" className="hover:text-[#0f2f61] transition-colors">คอลเลกชัน 2026</Link></li>
-              <li lang="th" className={promptThai.className}><Link href="/downloads" className="hover:text-[#0f2f61] transition-colors">ดาวน์โหลด Catalog</Link></li>
+              <li lang="th" className={promptThai.className}><a href="https://drive.google.com/file/d/1QPgTuxC_bX05rapw0WXfXSHz70tseg94/view?fbclid=IwY2xjawSCLlpleHRuA2FlbQIxMABicmlkETFaU0NseEJsR3h6ZWNvTTIwc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHqKqvaUZoFAYTUpjIlLrb3J9eBd0fSvP2vv1a1kUY5TarWWS8J7GlAjJJDWk_aem_h0i5uvgk_2FOVmkTAibkcw&pli=1" target="_blank" rel="noreferrer" className="hover:text-[#0f2f61] transition-colors">ดาวน์โหลด Catalog</a></li>
               <li lang="th" className={promptThai.className}><Link href="/contact" className="hover:text-[#0f2f61] transition-colors">ติดต่อเรา</Link></li>
               <li lang="th" className={promptThai.className}><Link href="/contact" className="hover:text-[#0f2f61] transition-colors">ขอใบเสนอราคา</Link></li>
             </ul>

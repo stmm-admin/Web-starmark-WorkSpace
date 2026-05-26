@@ -72,11 +72,24 @@
         "videos"
       ]
     },
+    "features": {
+      "type": "text"
+    },
+    "variants": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.product-variant"
+    },
     "trending_topic": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::trending.trending",
       "inversedBy": "products"
+    },
+    "view_count": {
+      "type": "integer",
+      "default": 0,
+      "private": false
     }
   }
 }

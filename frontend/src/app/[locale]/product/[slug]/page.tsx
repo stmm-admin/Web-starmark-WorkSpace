@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getProductBySlug, getStrapiMedia } from '@/lib/api';
 import ProductGallery from '@/components/product/ProductGallery';
+import ProductTabs from '@/components/product/ProductTabs';
+import ViewTracker from '@/components/product/ViewTracker';
 
 export default async function ProductDetailPage({ params }: { params: Promise<{ locale: string, slug: string }> }) {
   const { locale, slug } = await params;
@@ -36,6 +38,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div className="bg-white min-h-screen">
+      <ViewTracker slug={product.slug} />
       <div className="container mx-auto px-6 lg:px-12 py-12 md:py-24">
         {/* Breadcrumb */}
         <nav className="mb-12">
@@ -68,18 +71,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </p>
             </div>
 
-            {/* Technical Specifications */}
-            <div className="border-t border-neutral-100 pt-10 mb-12">
-              <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-8">{t.specs}</h3>
-              <dl className="space-y-4">
-                {product.specifications && Object.entries(product.specifications).map(([key, value]) => (
-                  <div key={key} className="flex justify-between border-b border-neutral-50 pb-4">
-                    <dt className="text-xs text-secondary uppercase tracking-widest">{key}</dt>
-                    <dd className="text-xs text-primary font-medium">{value as string}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
+            {/* Tabs: Features / Specs / Variants */}
+            <ProductTabs
+              features={product.features}
+              specifications={product.specifications}
+              variants={product.variants}
+              locale={locale}
+            />
 
             {/* Video */}
             {product.video && (
@@ -104,13 +102,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                   {product.downloads.map((file, idx) => (
                     <a
                       key={idx}
-                      href={file}
+                      href={getStrapiMedia(file?.url) || '#'}
                       className="flex items-center justify-between p-4 border border-neutral-100 hover:border-primary transition-all group"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <span className="text-xs uppercase tracking-widest text-secondary group-hover:text-primary transition-colors">
-                        {t.pdf}
+                        {file?.name || t.pdf}
                       </span>
                       <svg className="w-4 h-4 text-neutral-300 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />

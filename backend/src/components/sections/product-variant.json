@@ -1,0 +1,20 @@
+{
+    "collectionName": "components_sections_product_variants",
+    "info": {
+        "displayName": "product-variant",
+        "description": "Product variant / SKU row"
+    },
+    "options": {},
+    "attributes": {
+        "sku": {
+            "type": "string"
+        },
+        "size": {
+            "type": "string"
+        },
+        "model_name": {
+            "type": "string"
+        }
+    },
+    "config": {}
+}

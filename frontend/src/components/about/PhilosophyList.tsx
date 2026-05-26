@@ -45,7 +45,7 @@ export default function PhilosophyList({ items }: PhilosophyListProps) {
             </span>
 
             <h4
-              className={`font-thai text-xl font-light mb-3 transition-colors duration-300 ${isActive ? 'text-primary' : 'text-primary/70'}`}
+              className={`font-serif italic text-xl font-light mb-3 transition-colors duration-300 ${isActive ? 'text-primary' : 'text-primary/70'}`}
             >
               {phil.thaiTitle}
             </h4>

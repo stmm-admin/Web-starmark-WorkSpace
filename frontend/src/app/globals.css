@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-inter), var(--font-kanit), 'Kanit', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-playfair), 'Sukhumvit Set', ui-serif, Georgia, serif;
-  --font-thai: var(--font-kanit), 'Kanit', sans-serif;
+  --font-sans: var(--font-inter), var(--font-prompt), 'Prompt', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-thai: var(--font-prompt), 'Prompt', sans-serif;
+  --font-kanit: var(--font-kanit-var), 'Kanit', sans-serif;
 
   --color-primary: #171717;
   --color-secondary: #737373;
@@ -25,7 +26,7 @@ body {
 }
 
 :lang(th) {
-  font-family: var(--font-kanit), 'Kanit', sans-serif;
+  font-family: var(--font-prompt), 'Prompt', sans-serif;
 }
 
 /* Luxury spacing & Typography */
@@ -55,4 +56,13 @@ body {
 
 .grid-hover-effect img {
   @apply transition-transform duration-1000 group-hover:scale-105;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }

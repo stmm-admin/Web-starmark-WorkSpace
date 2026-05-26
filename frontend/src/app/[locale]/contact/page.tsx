@@ -9,7 +9,7 @@ const kanit = Kanit({
 
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const dict = await getDictionary(locale as 'en' | 'th');
+  await getDictionary(locale as 'en' | 'th');
 
   const t = {
     th: {
@@ -74,7 +74,6 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
     <div className={`${kanit.className} bg-[#f8f9fb] min-h-screen`}>
       <section className="bg-primary text-white py-16 lg:py-20">
         <div className="container mx-auto px-6 lg:px-12">
-          <span className="text-[10px] uppercase tracking-[0.34em] text-white/70 block mb-4">{dict.navigation.contact}</span>
           <h1 className="text-4xl md:text-5xl font-light mb-4">{t.title}</h1>
           <p className="text-white/80 max-w-3xl text-base lg:text-lg">{t.subtitle}</p>
         </div>
@@ -91,7 +90,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 <div>
                   <p className="text-[11px] uppercase tracking-[0.22em] text-secondary mb-2">{t.phone}</p>
                   <p className="text-primary text-xl font-medium">02-123-4567</p>
-                </div>
+</div>
                 <div>
                   <p className="text-[11px] uppercase tracking-[0.22em] text-secondary mb-2">{t.email}</p>
                   <p className="text-primary text-lg">info@starmarkworkspace.com</p>
@@ -112,14 +111,37 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
               <div className="mt-10 pt-6 border-t border-neutral-200">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-secondary mb-4">{t.followUs}</p>
-                <a
-                  href="https://www.facebook.com/starmarkworkspace"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center rounded-lg bg-primary hover:bg-primary/90 text-white px-5 py-3 text-sm font-medium transition-colors"
-                >
-                  {t.facebook}
-                </a>
+                <div className="flex items-center gap-3">
+                  <a
+                    href="https://www.facebook.com/starmarkworkspace"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#fffdf9] border border-[#e1d5c7] text-[#3e649a] hover:bg-[#f5eee3] transition-colors text-sm"
+                    aria-label="Facebook"
+                  >
+                    f
+                  </a>
+                  <a
+                    href="https://lin.ee/mdbXXwN"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#fffdf9] border border-[#e1d5c7] text-[#3aa269] hover:bg-[#eef8ef] transition-colors text-[10px]"
+                    aria-label="Line"
+                  >
+                    Line
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@starmark.official"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#fffdf9] border border-[#e1d5c7] text-[#2d4d7f] hover:bg-[#f0f4fb] transition-colors"
+                    aria-label="TikTok"
+                  >
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07Z"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </aside>
 
@@ -133,24 +155,15 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                     <label htmlFor="fullName" className="block text-sm text-primary font-medium mb-2">
                       {t.fullName} <span className="text-red-500">*</span>
                     </label>
-                    <input
-                      id="fullName"
-                      name="fullName"
-                      type="text"
-                      required
+                    <input id="fullName" name="fullName" type="text" required
                       className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
-                      placeholder={t.fullName}
-                    />
+                      placeholder={t.fullName} />
                   </div>
                   <div>
                     <label htmlFor="company" className="block text-sm text-primary font-medium mb-2">{t.company}</label>
-                    <input
-                      id="company"
-                      name="company"
-                      type="text"
+                    <input id="company" name="company" type="text"
                       className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
-                      placeholder={t.company}
-                    />
+                      placeholder={t.company} />
                   </div>
                 </div>
 
@@ -159,37 +172,24 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                     <label htmlFor="phone" className="block text-sm text-primary font-medium mb-2">
                       {t.phone} <span className="text-red-500">*</span>
                     </label>
-                    <input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      required
+                    <input id="phone" name="phone" type="tel" required
                       className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
-                      placeholder={t.phonePlaceholder}
-                    />
+                      placeholder={t.phonePlaceholder} />
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm text-primary font-medium mb-2">{t.email}</label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
+                    <input id="email" name="email" type="email"
                       className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
-                      placeholder={t.emailPlaceholder}
-                    />
+                      placeholder={t.emailPlaceholder} />
                   </div>
                 </div>
 
                 <div>
                   <label htmlFor="interest" className="block text-sm text-primary font-medium mb-2">{t.interest}</label>
-                  <select
-                    id="interest"
-                    name="interest"
-                    className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                    defaultValue=""
-                  >
+                  <select id="interest" name="interest" defaultValue=""
+                    className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
                     <option value="" disabled>{t.interestPlaceholder}</option>
-                    <option value="workstation">{locale === 'th' ? 'Workstation' : 'Workstation'}</option>
+                    <option value="workstation">Workstation</option>
                     <option value="executive-desk">{locale === 'th' ? 'โต๊ะผู้บริหาร' : 'Executive Desk'}</option>
                     <option value="meeting-table">{locale === 'th' ? 'โต๊ะประชุม' : 'Meeting Table'}</option>
                     <option value="storage">{locale === 'th' ? 'ตู้เก็บเอกสาร' : 'Storage'}</option>
@@ -199,19 +199,13 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
                 <div>
                   <label htmlFor="details" className="block text-sm text-primary font-medium mb-2">{t.details}</label>
-                  <textarea
-                    id="details"
-                    name="details"
-                    rows={5}
+                  <textarea id="details" name="details" rows={5}
                     className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
-                    placeholder={t.detailsPlaceholder}
-                  />
+                    placeholder={t.detailsPlaceholder} />
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full md:w-auto inline-flex items-center justify-center rounded-xl bg-primary hover:bg-primary/90 text-white px-8 py-3.5 text-sm font-semibold tracking-wide transition-colors"
-                >
+                <button type="submit"
+                  className="w-full md:w-auto inline-flex items-center justify-center rounded-xl bg-primary hover:bg-primary/90 text-white px-8 py-3.5 text-sm font-semibold tracking-wide transition-colors">
                   {t.sendQuote}
                 </button>
               </form>

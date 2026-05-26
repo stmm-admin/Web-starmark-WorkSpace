@@ -25,9 +25,9 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
       {/* Header */}
       <div className="container mx-auto px-6 lg:px-12 py-24">
         <div className="max-w-4xl mb-20">
-          <span className="text-meta font-thai mb-6 block">{pageData?.meta_text || 'PROJECT SHOWCASE'}</span>
-          <h1 className="font-thai text-3xl md:text-5xl mb-6">{pageData?.title_text || (locale === 'th' ? 'โครงการตัวอย่าง' : 'Featured Projects')}</h1>
-          <p className="text-secondary font-thai text-lg font-light leading-relaxed max-w-2xl">
+          <span className="text-meta font-kanit mb-6 block">{pageData?.meta_text || 'PROJECT SHOWCASE'}</span>
+          <h1 className="font-kanit text-3xl md:text-5xl mb-6">{pageData?.title_text || (locale === 'th' ? 'โครงการตัวอย่าง' : 'Featured Projects')}</h1>
+          <p className="text-secondary font-kanit text-lg font-light leading-relaxed max-w-2xl">
             {pageData?.description_text || (locale === 'th'
               ? 'ตัวอย่างผลงานออกแบบและติดตั้งเฟอร์นิเจอร์สำนักงานสำหรับองค์กรชั้นนำ'
               : 'A curated selection of completed office workspace projects for leading organizations.')}
@@ -101,12 +101,12 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
           <span className="text-[10px] uppercase tracking-[0.5em] mb-8 block opacity-40">
             {locale === 'th' ? 'เริ่มต้นโครงการของคุณ' : 'Start Your Project'}
           </span>
-          <h2 className="font-thai text-4xl md:text-6xl font-light mb-6 max-w-3xl mx-auto leading-tight">
+          <h2 className="font-kanit text-4xl md:text-6xl font-light mb-6 max-w-3xl mx-auto leading-tight">
             {locale === 'th'
               ? 'ต้องการให้เราออกแบบพื้นที่ทำงานของคุณ?'
               : 'Ready to design your workspace?'}
           </h2>
-          <p className="text-white/50 font-thai font-light text-lg mb-16 max-w-xl mx-auto">
+          <p className="text-white/50 font-kanit font-light text-lg mb-16 max-w-xl mx-auto">
             {locale === 'th'
               ? 'ติดต่อทีมงานของเราเพื่อรับคำปรึกษาฟรี'
               : 'Contact our team for a complimentary consultation.'}

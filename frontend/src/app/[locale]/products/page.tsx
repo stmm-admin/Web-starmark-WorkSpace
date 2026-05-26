@@ -50,6 +50,11 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
           {products.map((product) => (
             <Link key={product.id} href={`/${locale}/product/${product.slug}`} className="group block">
               <div className="relative aspect-[3/4] bg-neutral-50 mb-8 overflow-hidden flex items-center justify-center p-12 transition-colors group-hover:bg-neutral-100">
+                {(product.view_count ?? 0) >= 1 && (
+                  <span className="absolute top-3 left-3 z-10 bg-primary text-white text-[9px] font-semibold tracking-widest uppercase px-2.5 py-1">
+                    Popular
+                  </span>
+                )}
                 <Image
                   src={getStrapiMedia(product.gallery?.[0]?.url) || "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?q=80&w=600"}
                   alt={product.name}
@@ -59,7 +64,10 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
               </div>
               <span className="text-meta text-[9px] mb-3 block">{product.collection?.name ?? ''}</span>
               <h3 className="text-xl font-serif text-primary group-hover:text-secondary transition-colors mb-2">{product.name}</h3>
-              <p className="text-sm text-secondary font-light line-clamp-1">{product.short_description}</p>
+              <p className="text-sm text-secondary font-light line-clamp-1 mb-4">{product.short_description}</p>
+              <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
+                {locale === 'th' ? 'ดูรายละเอียด' : 'View Details'} &rarr;
+              </span>
             </Link>
           ))}
         </div>

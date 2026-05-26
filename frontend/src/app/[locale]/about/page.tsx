@@ -163,6 +163,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
             {/* Left — image */}
             <div className="lg:sticky lg:top-24">
+              <div style={{ animation: 'float 6s ease-in-out infinite' }}>
               <div className="relative w-full aspect-[3/4] overflow-hidden bg-neutral-100">
                 {about?.vision?.image?.url ? (
                   <Image
@@ -179,11 +180,12 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                   </div>
                 )}
               </div>
+              </div>
             </div>
 
             {/* Right — staggered philosophy */}
             <div className="flex flex-col justify-center pt-4">
-              <h2 className="font-thai text-4xl md:text-5xl font-light text-primary mb-20">
+              <h2 className="font-serif italic text-4xl md:text-5xl font-light text-primary mb-20">
                 {about?.vision?.title || (locale === 'th' ? 'วิสัยทัศน์' : 'Vision')}
               </h2>
               <PhilosophyList items={philosophies} />

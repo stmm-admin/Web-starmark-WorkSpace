@@ -36,6 +36,12 @@ export interface Collection {
   products?: Product[];
 }
 
+export interface ProductVariant {
+  sku: string;
+  size: string;
+  model_name: string;
+}
+
 export interface Product {
   id: string | number;
   documentId?: string;
@@ -51,6 +57,9 @@ export interface Product {
   video?: any;
   seo_title?: string;
   seo_description?: string;
+  features?: string;
+  variants?: ProductVariant[];
+  view_count?: number;
 }
 
 export interface Homepage {
@@ -350,7 +359,7 @@ export async function getProducts(categorySlug?: string, locale: string = 'th'):
 }
 
 export async function getProductBySlug(slug: string, locale: string = 'th'): Promise<Product | null> {
-  const data = await fetchAPI(`/products?filters[slug][$eq]=${slug}&populate=*&locale=${locale}`);
+  const data = await fetchAPI(`/products?filters[slug][$eq]=${slug}&populate[0]=gallery&populate[1]=category&populate[2]=collection&populate[3]=downloads&populate[4]=video&populate[5]=variants&locale=${locale}`);
   if (data && data.length > 0) return data[0];
 
   const mock = MOCK_PRODUCTS.find(p => p.slug === slug);
@@ -483,4 +492,12 @@ export async function getProjects(locale: string = 'th'): Promise<Project[]> {
   }
 
   return data;
+}
+
+export async function incrementProductView(slug: string): Promise<void> {
+  try {
+    await fetch(`${STRAPI_URL}/api/products/${slug}/view`, { method: 'POST' });
+  } catch {
+    // silent — view count is non-critical
+  }
 }
