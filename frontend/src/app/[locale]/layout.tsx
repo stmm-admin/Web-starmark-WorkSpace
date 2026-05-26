@@ -21,8 +21,8 @@ const kanit = Kanit({
 });
 
 export const metadata: Metadata = {
-  title: 'MOGEN - Premium Sanitaryware',
-  description: 'Elevating the bathroom experience with premium, minimal, and European-inspired sanitaryware.',
+  title: 'Starmark Work Space',
+  description: 'เฟอร์นิเจอร์สำนักงานระดับพรีเมียม ออกแบบเพื่อองค์กรชั้นนำ',
 };
 
 export async function generateStaticParams() {

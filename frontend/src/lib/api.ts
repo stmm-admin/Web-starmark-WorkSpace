@@ -463,6 +463,23 @@ export async function getProjectsPageData(locale: string = 'th'): Promise<Projec
 }
 
 export async function getProjects(locale: string = 'th'): Promise<Project[]> {
-  const data = await fetchAPI(`/projects?populate[0]=cover_image&populate[1]=tags&sort[0]=sort_order:asc&sort[1]=year:desc&locale=${locale}`);
-  return data || MOCK_PROJECTS;
+  const [data, enData] = await Promise.all([
+    fetchAPI(`/projects?populate[0]=cover_image&populate[1]=tags&sort[0]=sort_order:asc&sort[1]=year:desc&locale=${locale}`),
+    locale !== 'en' ? fetchAPI(`/projects?populate[0]=cover_image&sort[0]=sort_order:asc&sort[1]=year:desc&locale=en`) : Promise.resolve(null),
+  ]);
+
+  if (!data) return MOCK_PROJECTS;
+
+  // Merge EN cover_image into current locale if missing
+  if (enData) {
+    return data.map((project: Project) => {
+      if (!project.cover_image) {
+        const enMatch = enData.find((e: Project) => e.name === project.name);
+        if (enMatch?.cover_image) return { ...project, cover_image: enMatch.cover_image };
+      }
+      return project;
+    });
+  }
+
+  return data;
 }
