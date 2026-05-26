@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getDictionary } from '@/dictionaries/get-dictionary';
 import { getAbout, getStrapiMedia } from '@/lib/api';
+import PhilosophyList from '@/components/about/PhilosophyList';
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -118,23 +119,36 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </section>
 
       {/* Brand Story Section */}
-      <section className="py-32 bg-white">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl font-serif italic text-primary mb-6">{dict.about.title}</h2>
-            <div className="w-16 h-px bg-primary/20 mx-auto mb-12" />
-            <p className="text-secondary text-lg font-light leading-[1.9] mb-6">
+      <section className="relative py-40 bg-white overflow-hidden">
+        {/* Ghost background text */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+          <span className="font-serif italic text-[18vw] leading-none text-primary/[0.04] whitespace-nowrap">
+            STARMARK
+          </span>
+        </div>
+
+        <div className="relative z-10 container mx-auto px-6 lg:px-12">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="font-thai text-4xl md:text-5xl font-light text-primary leading-tight mb-10">
+              {dict.about.title}
+            </h2>
+            <div className="flex items-center gap-4 justify-center mb-14">
+              <div className="h-px w-16 bg-primary/20" />
+              <div className="w-1 h-1 rounded-full bg-primary/30" />
+              <div className="h-px w-16 bg-primary/20" />
+            </div>
+            <p className="text-secondary text-lg font-light leading-[1.9]">
               {about?.vision?.statement || (locale === 'th'
-                ? ''
-                : 'Starmark Work Space was founded on the belief that a well-designed work environment can inspire creativity, boost productivity, and reflect the professionalism of an organization. With over 15 years of experience in the office furniture industry, we have developed products that seamlessly blend aesthetics, durability, and functionality — crafted by a team of professional designers and engineers to serve leading organizations across the country.')}
+                ? 'Starmark Work Space ก่อตั้งขึ้นด้วยความเชื่อว่าสภาพแวดล้อมการทำงานที่ดีสามารถสร้างแรงบันดาลใจ เพิ่มประสิทธิภาพ และสะท้อนถึงความเป็นมืออาชีพขององค์กร ด้วยประสบการณ์กว่า 15 ปีในอุตสาหกรรมเฟอร์นิเจอร์สำนักงาน เราได้พัฒนาและออกแบบผลิตภัณฑ์ที่ผสานความสวยงาม ความทนทาน และฟังก์ชันการใช้งานเข้าด้วยกันอย่างลงตัว'
+                : 'Starmark Work Space was founded on the belief that a well-designed work environment can inspire creativity, boost productivity, and reflect the professionalism of an organization. With over 15 years of experience in the office furniture industry, we have developed products that seamlessly blend aesthetics, durability, and functionality.')}
             </p>
             {about?.story?.description_1 && (
-              <p className="text-secondary text-lg font-light leading-[1.9] mb-6">
+              <p className="text-secondary text-lg font-light leading-[1.9] mt-6">
                 {about.story.description_1}
               </p>
             )}
             {about?.story?.description_2 && (
-              <p className="text-secondary text-lg font-light leading-[1.9]">
+              <p className="text-secondary text-lg font-light leading-[1.9] mt-6">
                 {about.story.description_2}
               </p>
             )}
@@ -145,20 +159,36 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       {/* Vision & Philosophy */}
       <section className="py-32 bg-neutral-50">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="mb-32 text-center">
-            <h2 className="text-5xl font-serif italic text-primary uppercase tracking-tight">{about?.vision?.title || (locale === 'th' ? 'วิสัยทัศน์' : 'Vision')}</h2>
-            <div className="w-16 h-px bg-primary/20 mx-auto mt-6" />
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            {philosophies.map((phil, idx) => (
-              <div key={idx} className="bg-white p-12 shadow-sm hover:shadow-md transition-shadow">
-                <span className="text-primary font-serif text-3xl mb-6 block italic">0{idx + 1}</span>
-                <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-4">{phil.title}</h3>
-                <h4 className="text-lg font-serif mb-4 text-primary italic">{phil.thaiTitle}</h4>
-                <p className="text-secondary font-light text-sm leading-relaxed">{phil.description}</p>
+            {/* Left — image */}
+            <div className="lg:sticky lg:top-24">
+              <div className="relative w-full aspect-[3/4] overflow-hidden bg-neutral-100">
+                {about?.vision?.image?.url ? (
+                  <Image
+                    src={getStrapiMedia(about.vision.image.url) || ''}
+                    alt={about?.vision?.title || 'Vision'}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-[10px] uppercase tracking-widest text-neutral-400">
+                      {locale === 'th' ? 'เพิ่มรูปภาพใน Strapi' : 'Add image in Strapi'}
+                    </span>
+                  </div>
+                )}
               </div>
-            ))}
+            </div>
+
+            {/* Right — staggered philosophy */}
+            <div className="flex flex-col justify-center pt-4">
+              <h2 className="font-thai text-4xl md:text-5xl font-light text-primary mb-20">
+                {about?.vision?.title || (locale === 'th' ? 'วิสัยทัศน์' : 'Vision')}
+              </h2>
+              <PhilosophyList items={philosophies} />
+            </div>
+
           </div>
         </div>
       </section>
@@ -212,21 +242,6 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-40 bg-primary text-white text-center">
-        <div className="container mx-auto px-6">
-          <span className="text-[10px] uppercase tracking-[0.5em] mb-8 block opacity-70">{about?.cta?.subtitle || 'Experience MOGEN'}</span>
-          <h2 className="text-4xl md:text-6xl font-serif mb-12 italic">{about?.cta?.title || (locale === 'th' ? 'ร่วมสัมผัสประสบการณ์แห่งดีไซน์' : 'Experience Our Design')}</h2>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link href={about?.cta?.button_link || `/${locale}/products`} className="btn-premium border border-white hover:bg-white hover:text-primary transition-all">
-              {about?.cta?.button_text || (locale === 'th' ? 'เลือกชมสินค้า' : 'View Products')}
-            </Link>
-            <Link href={about?.cta?.button2_link || `/${locale}/contact`} className="btn-premium bg-white text-primary hover:bg-neutral-100 transition-all">
-              {about?.cta?.button2_text || (locale === 'th' ? 'ติดต่อเรา' : 'Contact Us')}
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

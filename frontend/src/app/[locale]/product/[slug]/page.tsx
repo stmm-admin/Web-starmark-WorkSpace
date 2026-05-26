@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import { getProductBySlug, getStrapiMedia } from '@/lib/api';
+import ProductGallery from '@/components/product/ProductGallery';
 
 export default async function ProductDetailPage({ params }: { params: Promise<{ locale: string, slug: string }> }) {
   const { locale, slug } = await params;
@@ -46,32 +46,14 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
           {/* Main Gallery */}
-          <div className="lg:col-span-7 space-y-8">
-            <div className="aspect-square bg-neutral-50 flex items-center justify-center p-12 md:p-24 overflow-hidden">
-              <div className="relative w-full h-full">
-                <Image
-                  src={getStrapiMedia(product.gallery?.[0]?.url) || "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?q=80&w=1200"}
-                  alt={product.name}
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-4 gap-4">
-              {(product.gallery || [null, null, null, null]).slice(0, 4).map((img: any, i: number) => (
-                <div key={i} className="aspect-square bg-neutral-50 flex items-center justify-center p-4 cursor-pointer hover:bg-neutral-100 transition-colors">
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={getStrapiMedia(img?.url) || "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?q=80&w=400"}
-                      alt={`${product.name} view ${i}`}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="lg:col-span-7">
+            <ProductGallery
+              productName={product.name}
+              images={(product.gallery && product.gallery.length > 0 ? product.gallery : [null]).map((img: any, i: number) => ({
+                url: getStrapiMedia(img?.url) || "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?q=80&w=1200",
+                alt: `${product.name} view ${i + 1}`,
+              }))}
+            />
           </div>
 
           {/* Product Info */}

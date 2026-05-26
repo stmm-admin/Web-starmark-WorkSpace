@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { getProjects, getProjectsPageData, getStrapiMedia } from '@/lib/api';
 
 const FALLBACK_IMAGES: Record<string, string> = {
@@ -93,6 +94,32 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
           </div>
         )}
       </div>
+
+      {/* CTA Section */}
+      <section className="bg-primary text-white py-20">
+        <div className="container mx-auto px-6 lg:px-12 text-center">
+          <span className="text-[10px] uppercase tracking-[0.5em] mb-8 block opacity-40">
+            {locale === 'th' ? 'เริ่มต้นโครงการของคุณ' : 'Start Your Project'}
+          </span>
+          <h2 className="font-thai text-4xl md:text-6xl font-light mb-6 max-w-3xl mx-auto leading-tight">
+            {locale === 'th'
+              ? 'ต้องการให้เราออกแบบพื้นที่ทำงานของคุณ?'
+              : 'Ready to design your workspace?'}
+          </h2>
+          <p className="text-white/50 font-thai font-light text-lg mb-16 max-w-xl mx-auto">
+            {locale === 'th'
+              ? 'ติดต่อทีมงานของเราเพื่อรับคำปรึกษาฟรี'
+              : 'Contact our team for a complimentary consultation.'}
+          </p>
+          <Link
+            href={`/${locale}/contact`}
+            className="inline-flex items-center gap-4 border border-white/30 text-white px-12 py-4 text-xs tracking-widest uppercase hover:bg-white hover:text-primary transition-all duration-300"
+          >
+            {locale === 'th' ? 'ติดต่อเรา' : 'Contact Us'}
+            <span>&rarr;</span>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

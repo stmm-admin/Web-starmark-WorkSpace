@@ -417,6 +417,7 @@ export interface About {
     meta: string;
     title: string;
     statement: string;
+    image?: { url: string };
   };
   philosophies?: {
     id: number;
@@ -443,7 +444,7 @@ export interface About {
 }
 
 export async function getAbout(locale: string = 'th'): Promise<About | null> {
-  const data = await fetchAPI(`/about?populate[hero][populate]=*&populate[story]=*&populate[vision]=*&populate[philosophies]=*&populate[timeline]=*&populate[cta]=*&locale=${locale}`);
+  const data = await fetchAPI(`/about?populate[hero][populate]=*&populate[story]=*&populate[vision][populate]=*&populate[philosophies]=*&populate[timeline]=*&populate[cta]=*&locale=${locale}`);
   return data || null;
 }
 
