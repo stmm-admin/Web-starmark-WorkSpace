@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { getDictionary } from '@/dictionaries/get-dictionary';
 import { getAbout, getStrapiMedia } from '@/lib/api';
 import PhilosophyList from '@/components/about/PhilosophyList';
@@ -94,7 +93,6 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             src={getStrapiMedia(about.hero.hero_video.url) || ''}
             poster={getStrapiMedia(about.hero.poster_image?.url) || ''}
             autoPlay
-            loop
             muted
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
@@ -164,7 +162,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             {/* Left — image */}
             <div className="lg:sticky lg:top-24">
               <div style={{ animation: 'float 6s ease-in-out infinite' }}>
-              <div className="relative w-full aspect-[3/4] overflow-hidden bg-neutral-100">
+              <div className="relative w-full aspect-[3/4] overflow-hidden bg-neutral-100 rounded-3xl">
                 {about?.vision?.image?.url ? (
                   <Image
                     src={getStrapiMedia(about.vision.image.url) || ''}

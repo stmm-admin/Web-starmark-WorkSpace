@@ -1,0 +1,33 @@
+{
+    "collectionName": "components_sections_promo_cards",
+    "info": {
+        "displayName": "Promo Card",
+        "description": "กล่องโปรโมชั่น (ชื่อ, คำอธิบาย, ปุ่ม, รูป, พื้นหลัง)"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "subtitle": {
+            "type": "string"
+        },
+        "button_text": {
+            "type": "string"
+        },
+        "button_link": {
+            "type": "string"
+        },
+        "image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": ["images"]
+        },
+        "dark_background": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "config": {}
+}

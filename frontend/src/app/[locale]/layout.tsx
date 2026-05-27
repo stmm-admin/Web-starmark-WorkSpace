@@ -3,6 +3,7 @@ import { Inter, Playfair_Display, Prompt, Kanit, Montserrat } from 'next/font/go
 import '../globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import MessengerChat from '@/components/ui/MessengerChat';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -57,7 +58,8 @@ export default async function LocaleLayout({
         <main className="flex-grow">
           {children}
         </main>
-        <Footer />
+        <Footer locale={locale} />
+        <MessengerChat />
       </body>
     </html>
   );

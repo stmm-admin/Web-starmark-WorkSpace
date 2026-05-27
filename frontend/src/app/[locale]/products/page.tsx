@@ -1,76 +1,118 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { getCategories, getProducts, getStrapiMedia } from '@/lib/api';
+import { getCategories, getProducts, getNewProducts } from '@/lib/api';
+import ProductsCarousel from '@/components/ui/ProductsCarousel';
 
-export default async function ProductsPage({ params }: { params: Promise<{ locale: string }> }) {
+const PAGE_SIZE = 24;
+
+export default async function ProductsPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ page?: string }>;
+}) {
   const { locale } = await params;
-  const categories = await getCategories(locale);
-  const products = await getProducts(undefined, locale);
+  const { page: pageParam } = await searchParams;
+  const page = Math.max(1, parseInt(pageParam ?? '1', 10));
+
+  const [categories, { data: products, total }, newProducts] = await Promise.all([
+    getCategories(locale),
+    getProducts(undefined, locale, page, PAGE_SIZE),
+    getNewProducts(locale),
+  ]);
+  const totalPages = Math.ceil(total / PAGE_SIZE);
 
   const t = {
     th: {
       meta: 'Collections Overview',
       title: 'All Products',
       desc: 'เฟอร์นิเจอร์สำนักงานระดับพรีเมียมครบทุกกลุ่ม ออกแบบเพื่อองค์กรชั้นนำ',
-      all: 'All Objects'
+      all: 'All Objects',
+      prev: '← ก่อนหน้า',
+      next: 'ถัดไป →',
+      newMeta: 'สินค้ามาใหม่',
+      newTitle: 'New Products',
     },
     en: {
       meta: 'Collections Overview',
       title: 'All Products',
       desc: 'Premium office furniture across every category, designed for leading organizations.',
-      all: 'All Objects'
-    }
+      all: 'All Objects',
+      prev: '← Previous',
+      next: 'Next →',
+      newMeta: 'New Arrivals',
+      newTitle: 'New Products',
+    },
   }[locale as 'en' | 'th'];
 
   return (
     <div className="bg-white min-h-screen">
       <div className="container mx-auto px-6 lg:px-12 py-24">
-        <div className="max-w-4xl mb-24">
-          <span className="text-meta mb-6 block">{t.meta}</span>
-          <h1 className="heading-section">{t.title}</h1>
-          <p className="text-secondary text-lg font-light leading-relaxed max-w-2xl">
-            {t.desc}
-          </p>
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-12 mb-24">
+          <div className="max-w-xl">
+            <span className="text-meta mb-6 block">{t.meta}</span>
+            <h1 className="heading-section">{t.title}</h1>
+            <p className="text-secondary text-lg font-light leading-relaxed max-w-2xl">{t.desc}</p>
+          </div>
+          <div className="max-w-sm lg:text-right">
+            <p className="font-serif text-xl md:text-2xl text-primary leading-snug mb-3">
+              {locale === 'th' ? 'โต๊ะทำงานที่สะท้อนตัวตนของผู้นำ' : 'A desk that reflects the identity of a leader.'}
+            </p>
+            <p className="text-secondary text-sm font-light leading-relaxed">
+              {locale === 'th'
+                ? 'เพราะ "พื้นที่ทำงาน" คือภาพลักษณ์แรกของความเป็นมืออาชีพ'
+                : 'Because your workspace is the first impression of professionalism.'}
+            </p>
+          </div>
         </div>
 
-        {/* Minimal Category Filter */}
+        {/* New Products Section */}
+        {newProducts.length > 0 && (
+          <div className="mb-24">
+            <h2 className="font-serif text-2xl md:text-3xl text-primary mb-10">{t.newTitle}</h2>
+            <ProductsCarousel products={newProducts} locale={locale} />
+          </div>
+        )}
+
+        {/* Category Filter */}
         <div className="flex flex-wrap gap-x-12 gap-y-6 mb-24 border-b border-neutral-100 pb-8">
-          <Link href={`/${locale}/products`} className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary border-b-2 border-primary pb-8 -mb-[34px] transition-all">
+          <Link href={`/${locale}/products`} className="text-xs uppercase tracking-[0.2em] font-bold text-primary border-b-2 border-primary pb-8 -mb-[34px] transition-all">
             {t.all}
           </Link>
           {categories.map(cat => (
-            <Link key={cat.id} href={`/${locale}/products/${cat.slug}`} className="text-[10px] uppercase tracking-[0.3em] font-bold text-secondary hover:text-primary pb-8 transition-colors">
+            <Link key={cat.id} href={`/${locale}/products/${cat.slug}`} className="text-xs uppercase tracking-[0.2em] font-bold text-secondary hover:text-primary pb-8 transition-colors">
               {cat.name}
             </Link>
           ))}
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-20">
-          {products.map((product) => (
-            <Link key={product.id} href={`/${locale}/product/${product.slug}`} className="group block">
-              <div className="relative aspect-[3/4] bg-neutral-50 mb-8 overflow-hidden flex items-center justify-center p-12 transition-colors group-hover:bg-neutral-100">
-                {(product.view_count ?? 0) >= 1 && (
-                  <span className="absolute top-3 left-3 z-10 bg-primary text-white text-[9px] font-semibold tracking-widest uppercase px-2.5 py-1">
-                    Popular
-                  </span>
-                )}
-                <Image
-                  src={getStrapiMedia(product.gallery?.[0]?.url) || "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?q=80&w=600"}
-                  alt={product.name}
-                  fill
-                  className="object-contain p-8 transition-transform duration-1000 group-hover:scale-110"
-                />
-              </div>
-              <span className="text-meta text-[9px] mb-3 block">{product.collection?.name ?? ''}</span>
-              <h3 className="text-xl font-serif text-primary group-hover:text-secondary transition-colors mb-2">{product.name}</h3>
-              <p className="text-sm text-secondary font-light line-clamp-1 mb-4">{product.short_description}</p>
-              <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-                {locale === 'th' ? 'ดูรายละเอียด' : 'View Details'} &rarr;
-              </span>
-            </Link>
-          ))}
-        </div>
+        {/* Product Carousel */}
+        <ProductsCarousel products={products} locale={locale} />
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 mt-24 border-t border-neutral-100 pt-12">
+            {page > 1 && (
+              <Link href={`/${locale}/products?page=${page - 1}`} className="text-[11px] uppercase tracking-widest text-primary border border-neutral-300 px-5 py-2.5 hover:border-primary transition-colors">
+                {t.prev}
+              </Link>
+            )}
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+              <Link
+                key={p}
+                href={`/${locale}/products?page=${p}`}
+                className={`text-[11px] w-9 h-9 flex items-center justify-center border transition-colors ${p === page ? 'bg-primary text-white border-primary' : 'border-neutral-300 text-primary hover:border-primary'}`}
+              >
+                {p}
+              </Link>
+            ))}
+            {page < totalPages && (
+              <Link href={`/${locale}/products?page=${page + 1}`} className="text-[11px] uppercase tracking-widest text-primary border border-neutral-300 px-5 py-2.5 hover:border-primary transition-colors">
+                {t.next}
+              </Link>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

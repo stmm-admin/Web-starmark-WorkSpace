@@ -1,11 +1,6 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import emailjs from '@emailjs/browser';
-
-const SERVICE_ID = 'YOUR_SERVICE_ID';
-const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
 
 interface Props {
   locale: string;
@@ -30,15 +25,41 @@ export default function ContactForm({ locale, t }: Props) {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formRef.current) return;
+
+    const fd = new FormData(formRef.current);
+    const name  = (fd.get('from_name') as string)?.trim();
+    const phone = (fd.get('phone') as string)?.trim();
+    if (!name || !phone) {
+      setError(true);
+      return;
+    }
 
     setSending(true);
     setError(false);
 
     try {
-      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY);
+      const company  = (fd.get('company') as string)?.trim();
+      const email    = (fd.get('from_email') as string)?.trim();
+      const interest = (fd.get('interest') as string)?.trim();
+      const message  = (fd.get('message') as string)?.trim();
+
+      const lines = [
+        '📋 ขอใบเสนอราคา — STARMARK Work Space',
+        '',
+        `👤 ชื่อ: ${name}`,
+        company  ? `🏢 บริษัท: ${company}`  : '',
+        `📞 โทรศัพท์: ${phone}`,
+        email    ? `📧 อีเมล: ${email}`    : '',
+        interest ? `🪑 สินค้าที่สนใจ: ${interest}` : '',
+        message  ? `📝 รายละเอียด: ${message}` : '',
+      ].filter(Boolean).join('\n');
+
+      const messengerUrl = `https://m.me/starmarkworkspace?text=${encodeURIComponent(lines)}`;
+      window.open(messengerUrl, '_blank');
+
       setSent(true);
       formRef.current.reset();
     } catch {
@@ -76,7 +97,7 @@ export default function ContactForm({ locale, t }: Props) {
           </button>
         </div>
       ) : (
-        <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+        <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label className="block text-sm text-primary font-medium mb-2">
@@ -85,7 +106,6 @@ export default function ContactForm({ locale, t }: Props) {
               <input
                 name="from_name"
                 type="text"
-                required
                 className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
                 placeholder={t.fullName}
               />
@@ -108,8 +128,7 @@ export default function ContactForm({ locale, t }: Props) {
               </label>
               <input
                 name="phone"
-                type="tel"
-                required
+                type="text"
                 className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
                 placeholder="08X-XXX-XXXX"
               />
@@ -118,7 +137,8 @@ export default function ContactForm({ locale, t }: Props) {
               <label className="block text-sm text-primary font-medium mb-2">{t.email}</label>
               <input
                 name="from_email"
-                type="email"
+                type="text"
+                autoComplete="email"
                 className="w-full rounded-xl border border-neutral-300 px-4 py-3 bg-[#fcfcfd] text-primary placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
                 placeholder="email@company.com"
               />

@@ -36,6 +36,17 @@
             "relation": "oneToMany",
             "target": "api::product.product",
             "description": "เลือกสินค้าที่ต้องการให้ไปโชว์ในหัวข้อสินค้าเด่น (Design Highlights)"
+        },
+        "promo_grid": {
+            "type": "component",
+            "repeatable": true,
+            "component": "sections.promo-card",
+            "max": 4
+        },
+        "popup": {
+            "type": "component",
+            "repeatable": false,
+            "component": "sections.announcement-popup"
         }
     }
 }

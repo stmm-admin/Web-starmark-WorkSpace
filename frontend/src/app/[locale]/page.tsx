@@ -1,48 +1,51 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getCategories, getProducts, getHomepage, getTrendings, getStrapiMedia } from '@/lib/api';
+import { getCategories, getFeaturedProducts, getHomepage, getTrendings, getStrapiMedia } from '@/lib/api';
 import { getDictionary } from '@/dictionaries/get-dictionary';
+import FeaturedCarousel from '@/components/ui/FeaturedCarousel';
+import AnnouncementPopup from '@/components/ui/AnnouncementPopup';
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict = await getDictionary(locale as 'en' | 'th');
 
-  const categories = await getCategories(locale);
-  const products = await getProducts(undefined, locale);
-  const homepage = await getHomepage(locale);
-  const trendings = await getTrendings(locale);
+  const [categories, homepage, trendings, fallbackProducts] = await Promise.all([
+    getCategories(locale),
+    getHomepage(locale),
+    getTrendings(locale),
+    getFeaturedProducts(locale),
+  ]);
 
-  // Use explicitly selected products from Strapi, or fallback to the first 4 available products
+  // Use explicitly selected products from Strapi, or fallback to top 4 by view_count
   const featuredProducts = homepage.featured_products?.length
     ? homepage.featured_products
-    : products.slice(0, 4);
+    : fallbackProducts;
 
   return (
     <div className="flex flex-col">
+      {homepage.popup && <AnnouncementPopup popup={homepage.popup} />}
       {/* Dynamic Video Hero Section */}
       <section className="relative h-[90vh] w-full overflow-hidden bg-black">
-        {homepage.hero?.hero_video ? (
+        {/* Poster image — always render behind video to prevent black flash */}
+        <Image
+          src={getStrapiMedia(homepage.hero?.poster_image?.url) || "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000"}
+          alt="Hero Background"
+          fill
+          className="object-cover"
+          priority
+        />
+        {homepage.hero?.hero_video && (
           <video
             src={getStrapiMedia(homepage.hero.hero_video.url) || ''}
-            poster={getStrapiMedia(homepage.hero.poster_image?.url) || ''}
             autoPlay
-            loop
             muted
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           />
-        ) : (
-          <Image
-            src={getStrapiMedia(homepage.hero?.poster_image?.url) || "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000"}
-            alt="Hero Background"
-            fill
-            className="object-cover opacity-80"
-            priority
-          />
         )}
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <span className="text-white text-[10px] uppercase tracking-[0.4em] mb-6 font-semibold animate-fade-in">
+          <span className="text-white text-sm uppercase tracking-[0.4em] mb-6 font-semibold animate-fade-in">
             {homepage.hero?.subtitle || dict.home.hero.collection}
           </span>
           <h1 className="text-white text-5xl md:text-8xl leading-tight tracking-tight font-semibold mb-8 max-w-4xl" style={{ fontFamily: 'var(--font-montserrat), Montserrat, sans-serif' }}>
@@ -63,7 +66,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <p className="text-secondary text-lg leading-relaxed font-light mb-8">
               {(locale === 'en' ? null : homepage.philosophy?.description) || dict.home.philosophy.description}
             </p>
-            <Link href={homepage.philosophy?.cta_link || `/${locale}/about`} className="text-xs font-bold uppercase tracking-widest border-b border-primary pb-2 hover:text-secondary hover:border-secondary transition-all">
+            <Link href={homepage.philosophy?.cta_link || `/${locale}/about`} className="inline-block text-xs font-bold uppercase tracking-widest border-b border-primary pb-2 hover:text-secondary hover:border-secondary transition-all animate-bounce">
               {homepage.philosophy?.cta_text || dict.home.philosophy.cta}
             </Link>
           </div>
@@ -112,32 +115,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               {homepage.featured?.view_all_text || dict.home.featured.viewAll}
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-            {featuredProducts.map((product) => (
-              <Link key={product.id} href={`/${locale}/product/${product.slug}`} className="group block">
-                <div className="relative aspect-[3/4] bg-white mb-6 overflow-hidden flex items-center justify-center p-8">
-                  {(product.view_count ?? 0) >= 1 && (
-                    <span className="absolute top-3 left-3 z-10 bg-primary text-white text-[9px] font-semibold tracking-widest uppercase px-2.5 py-1">
-                      Popular
-                    </span>
-                  )}
-                  <div className="w-full h-full relative">
-                    <Image
-                      src={getStrapiMedia(product.gallery?.[0]?.url) || "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?q=80&w=600"}
-                      alt={product.name}
-                      fill
-                      className="object-contain transition-transform duration-700 group-hover:scale-110"
-                    />
-                  </div>
-                </div>
-                <span className="text-[10px] uppercase tracking-widest text-secondary font-semibold block mb-2">{product.collection?.name ?? ''}</span>
-                <h3 className="text-lg font-serif text-primary group-hover:text-secondary transition-colors mb-3">{product.name}</h3>
-                <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-                  {locale === 'th' ? 'ดูรายละเอียด' : 'View Details'} &rarr;
-                </span>
-              </Link>
-            ))}
-          </div>
+          <FeaturedCarousel products={featuredProducts} locale={locale} />
         </div>
       </section>
 
@@ -156,7 +134,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                   {dict.home.aero.cta}
                 </Link>
               </div>
-              <div className={`lg:col-span-7 relative aspect-[4/3] bg-neutral-100 overflow-hidden ${idx % 2 === 1 ? 'lg:order-1' : ''}`}>
+              <div className={`lg:col-span-7 relative aspect-[4/3] bg-neutral-100 overflow-hidden rounded-3xl ${idx % 2 === 1 ? 'lg:order-1' : ''}`}>
                 <Image
                   src={getStrapiMedia(item.hero_image?.url) || "https://images.unsplash.com/photo-1620626011761-9963d7521576?q=80&w=1200"}
                   alt={item.title}
@@ -169,12 +147,61 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </section>
       ))}
 
+      {/* Promo Grid — Apple-style 2×2 */}
+      {homepage.promo_grid && homepage.promo_grid.length > 0 && (
+        <section className="bg-neutral-200 p-0.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-0.5">
+            {homepage.promo_grid.slice(0, 4).map((card) => (
+              <div
+                key={card.id}
+                className={`relative overflow-hidden aspect-[21/9] ${card.dark_background ? 'bg-neutral-900' : 'bg-neutral-200'}`}
+              >
+                {/* Image fills card */}
+                {card.image?.url && (
+                  <Image
+                    src={getStrapiMedia(card.image.url) || ''}
+                    alt={card.title || ''}
+                    fill
+                    className="object-cover transition-transform duration-1000 hover:scale-105"
+                  />
+                )}
+
+                {/* Gradient overlay for readability */}
+                <div className={`absolute inset-0 ${card.dark_background ? 'bg-gradient-to-b from-black/50 via-black/20 to-black/10' : 'bg-gradient-to-b from-white/60 via-white/20 to-transparent'}`} />
+
+                {/* Text overlay — top center */}
+                <div className="absolute inset-0 flex flex-col items-center text-center pt-10 px-8 z-10">
+                  {card.title && (
+                    <h3 className={`font-serif text-2xl md:text-3xl mb-2 ${card.dark_background ? 'text-white' : 'text-neutral-900'}`}>
+                      {card.title}
+                    </h3>
+                  )}
+                  {card.subtitle && (
+                    <p className={`text-sm font-light mb-4 ${card.dark_background ? 'text-white/80' : 'text-neutral-700'}`}>
+                      {card.subtitle}
+                    </p>
+                  )}
+                  {card.button_text && card.button_link && (
+                    <Link
+                      href={card.button_link}
+                      className={`inline-block text-[11px] font-semibold uppercase tracking-widest border-b pb-0.5 transition-opacity hover:opacity-60 ${card.dark_background ? 'text-white border-white' : 'text-neutral-900 border-neutral-900'}`}
+                    >
+                      {card.button_text} &rarr;
+                    </Link>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Why Starmark — Commitment Section */}
       <section className="py-32 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
 
           {/* Heading */}
-          <div className="text-center mb-24">
+          <div className="text-center mb-24" style={{ animation: 'float 4s ease-in-out infinite' }}>
             <span className="text-lg md:text-2xl uppercase tracking-[0.25em] font-bold text-[#b48a2a] mb-6 block">
               {locale === 'th' ? 'ทำไมต้องเลือก STARMARK?' : 'WHY CHOOSE STARMARK?'}
             </span>

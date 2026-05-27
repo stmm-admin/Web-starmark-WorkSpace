@@ -60,6 +60,18 @@ export interface Product {
   features?: string;
   variants?: ProductVariant[];
   view_count?: number;
+  trending_topic?: { id: number; slug?: string; title?: string } | null;
+  is_new?: boolean;
+}
+
+export interface PromoCard {
+  id: number;
+  title?: string;
+  subtitle?: string;
+  button_text?: string;
+  button_link?: string;
+  image?: { url: string };
+  dark_background?: boolean;
 }
 
 export interface Homepage {
@@ -93,6 +105,16 @@ export interface Homepage {
     button_link: string;
   };
   featured_products?: Product[];
+  promo_grid?: PromoCard[];
+  popup?: {
+    id: number;
+    enabled: boolean;
+    image?: { url: string };
+    title?: string;
+    description?: string;
+    button_text?: string;
+    button_link?: string;
+  };
 }
 
 export interface Trending {
@@ -131,7 +153,7 @@ export interface ProjectsPageData {
 /**
  * Helper to fetch from Strapi REST API
  */
-async function fetchAPI(path: string, options: RequestInit = {}) {
+async function fetchAPI(path: string, options: RequestInit = {}, raw = false) {
   const url = `${STRAPI_URL}/api${path}`;
 
   const headers: Record<string, string> = {
@@ -156,7 +178,7 @@ async function fetchAPI(path: string, options: RequestInit = {}) {
     }
 
     const json = await response.json();
-    return json.data;
+    return raw ? json : json.data;
   } catch (error) {
     console.warn('Fetch error:', error);
     return null;
@@ -347,15 +369,39 @@ export async function getCategoryBySlug(slug: string, locale: string = 'th'): Pr
   return mock || null;
 }
 
-export async function getProducts(categorySlug?: string, locale: string = 'th'): Promise<Product[]> {
+export async function getProducts(
+  categorySlug?: string,
+  locale: string = 'th',
+  page: number = 1,
+  pageSize: number = 24,
+): Promise<{ data: Product[]; total: number }> {
   const filter = categorySlug ? `&filters[category][slug][$eq]=${categorySlug}` : '';
-  const data = await fetchAPI(`/products?populate=*${filter}&locale=${locale}`);
+  const raw = await fetchAPI(
+    `/products?populate=*${filter}&sort[0]=view_count:desc&pagination[page]=${page}&pagination[pageSize]=${pageSize}&locale=${locale}`,
+    {},
+    true,
+  );
 
+  if (raw) return { data: raw.data ?? [], total: raw.meta?.pagination?.total ?? 0 };
+
+  const mock = categorySlug ? MOCK_PRODUCTS.filter(p => p.category === categorySlug) : MOCK_PRODUCTS;
+  return { data: mock, total: mock.length };
+}
+
+export async function getNewProducts(locale: string = 'th'): Promise<Product[]> {
+  const raw = await fetchAPI(
+    `/products?populate=*&filters[is_new][$eq]=true&sort[0]=createdAt:desc&pagination[pageSize]=12&locale=${locale}`,
+    {},
+    true,
+  );
+  if (raw) return raw.data ?? [];
+  return [];
+}
+
+export async function getFeaturedProducts(locale: string = 'th'): Promise<Product[]> {
+  const data = await fetchAPI(`/products?populate=*&sort[0]=view_count:desc&pagination[pageSize]=8&locale=${locale}`);
   if (data) return data;
-
-  return categorySlug
-    ? MOCK_PRODUCTS.filter(p => p.category === categorySlug)
-    : MOCK_PRODUCTS;
+  return MOCK_PRODUCTS.slice(0, 8);
 }
 
 export async function getProductBySlug(slug: string, locale: string = 'th'): Promise<Product | null> {
@@ -458,7 +504,7 @@ export async function getAbout(locale: string = 'th'): Promise<About | null> {
 }
 
 export async function getHomepage(locale: string = 'th'): Promise<Homepage> {
-  const data = await fetchAPI(`/homepage?populate[0]=hero.hero_video&populate[1]=hero.poster_image&populate[2]=philosophy&populate[3]=featured&populate[4]=cta&populate[5]=featured_products.gallery&locale=${locale}`);
+  const data = await fetchAPI(`/homepage?populate[0]=hero.hero_video&populate[1]=hero.poster_image&populate[2]=philosophy&populate[3]=featured&populate[4]=cta&populate[5]=featured_products.gallery&populate[6]=promo_grid.image&populate[7]=popup.image&locale=${locale}`);
   return data || MOCK_HOMEPAGE;
 }
 

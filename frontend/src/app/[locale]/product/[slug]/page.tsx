@@ -63,7 +63,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <div className="lg:col-span-5 flex flex-col">
             <div className="mb-12">
               <span className="text-meta mb-4 block">
-                {product.collection?.name ? `${product.collection.name} ${t.series}` : `MOGEN ${t.series}`}
+                {product.collection?.name ? `${product.collection.name} ${t.series}` : t.series}
               </span>
               <h1 className="heading-section !mb-6">{product.name}</h1>
               <p className="text-secondary text-lg font-light leading-relaxed">

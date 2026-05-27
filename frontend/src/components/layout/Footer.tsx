@@ -8,13 +8,17 @@ const promptThai = Prompt({
   display: 'swap',
 });
 
-export function Footer() {
+const CATALOG_URL = 'https://drive.google.com/file/d/1QPgTuxC_bX05rapw0WXfXSHz70tseg94/view?fbclid=IwY2xjawSCLlpleHRuA2FlbQIxMABicmlkETFaU0NseEJsR3h6ZWNvTTIwc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHqKqvaUZoFAYTUpjIlLrb3J9eBd0fSvP2vv1a1kUY5TarWWS8J7GlAjJJDWk_aem_h0i5uvgk_2FOVmkTAibkcw&pli=1';
+
+export function Footer({ locale = 'th' }: { locale?: string }) {
+  const isTh = locale === 'th';
+
   return (
     <footer className="mt-20 border-t border-[#eadfce] bg-white text-[#2d4d7f] font-sans">
       <div className="container mx-auto px-6 lg:px-12 py-10 lg:py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-10">
           <div>
-            <Link href="/">
+            <Link href={`/${locale}`}>
               <Image
                 src="/logo-starmark.png"
                 alt="Starmark Work Space"
@@ -25,8 +29,10 @@ export function Footer() {
               />
             </Link>
 
-            <p lang="th" className={`${promptThai.className} mt-4 text-[16px] leading-[1.45] text-[#4d668f] max-w-xs font-light`}>
-              เฟอร์นิเจอร์สำนักงานระดับพรีเมียม ออกแบบเพื่อองค์กรชั้นนำ ด้วยคุณภาพและดีไซน์ที่เหนือกว่า
+            <p className={`${isTh ? promptThai.className : ''} mt-4 text-[16px] leading-[1.45] text-[#4d668f] max-w-xs font-light`}>
+              {isTh
+                ? 'เฟอร์นิเจอร์สำนักงานระดับพรีเมียม ออกแบบเพื่อองค์กรชั้นนำ ด้วยคุณภาพและดีไซน์ที่เหนือกว่า'
+                : 'Premium office furniture designed for leading organizations, with superior quality and design.'}
             </p>
 
             <div className="mt-5 flex items-center gap-3">
@@ -63,44 +69,76 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 lang="th" className={`${promptThai.className} text-[24px] font-light text-black mb-3`}>กลุ่มสินค้า</h3>
+            <h3 className={`${isTh ? promptThai.className : ''} text-[24px] font-light text-black mb-3`}>
+              {isTh ? 'กลุ่มสินค้า' : 'Products'}
+            </h3>
             <ul className="space-y-1.5 text-[15px] font-light leading-snug text-[#2e548b]">
-              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">Executive Desk &amp; Chair</Link></li>
-              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">Workstation &amp; Chair</Link></li>
-              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">Meeting Table &amp; Conference</Link></li>
-              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">KERUI Series</Link></li>
-              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">AITE Series</Link></li>
-              <li><Link href="/products" className="hover:text-[#0f2f61] transition-colors">YOUMO Series</Link></li>
+              <li><Link href={`/${locale}/products`} className="hover:text-[#0f2f61] transition-colors">Executive Desk &amp; Chair</Link></li>
+              <li><Link href={`/${locale}/products`} className="hover:text-[#0f2f61] transition-colors">Workstation &amp; Chair</Link></li>
+              <li><Link href={`/${locale}/products`} className="hover:text-[#0f2f61] transition-colors">Meeting Table &amp; Conference</Link></li>
+              <li><Link href={`/${locale}/products`} className="hover:text-[#0f2f61] transition-colors">KERUI Series</Link></li>
+              <li><Link href={`/${locale}/products`} className="hover:text-[#0f2f61] transition-colors">AITE Series</Link></li>
+              <li><Link href={`/${locale}/products`} className="hover:text-[#0f2f61] transition-colors">YOUMO Series</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 lang="th" className={`${promptThai.className} text-[24px] font-light text-black mb-3`}>บริษัท</h3>
+            <h3 className={`${isTh ? promptThai.className : ''} text-[24px] font-light text-black mb-3`}>
+              {isTh ? 'บริษัท' : 'Company'}
+            </h3>
             <ul className="space-y-1.5 text-[15px] font-light leading-snug text-[#2e548b]">
-              <li lang="th" className={promptThai.className}><Link href="/about" className="hover:text-[#0f2f61] transition-colors">เกี่ยวกับเรา</Link></li>
-              <li lang="th" className={promptThai.className}><Link href="/projects" className="hover:text-[#0f2f61] transition-colors">โปรเจคตัวอย่าง</Link></li>
-              <li lang="th" className={promptThai.className}><Link href="/collections" className="hover:text-[#0f2f61] transition-colors">คอลเลกชัน 2026</Link></li>
-              <li lang="th" className={promptThai.className}><a href="https://drive.google.com/file/d/1QPgTuxC_bX05rapw0WXfXSHz70tseg94/view?fbclid=IwY2xjawSCLlpleHRuA2FlbQIxMABicmlkETFaU0NseEJsR3h6ZWNvTTIwc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHqKqvaUZoFAYTUpjIlLrb3J9eBd0fSvP2vv1a1kUY5TarWWS8J7GlAjJJDWk_aem_h0i5uvgk_2FOVmkTAibkcw&pli=1" target="_blank" rel="noreferrer" className="hover:text-[#0f2f61] transition-colors">ดาวน์โหลด Catalog</a></li>
-              <li lang="th" className={promptThai.className}><Link href="/contact" className="hover:text-[#0f2f61] transition-colors">ติดต่อเรา</Link></li>
-              <li lang="th" className={promptThai.className}><Link href="/contact" className="hover:text-[#0f2f61] transition-colors">ขอใบเสนอราคา</Link></li>
+              <li className={isTh ? promptThai.className : ''}>
+                <Link href={`/${locale}/about`} className="hover:text-[#0f2f61] transition-colors">
+                  {isTh ? 'เกี่ยวกับเรา' : 'About Us'}
+                </Link>
+              </li>
+              <li className={isTh ? promptThai.className : ''}>
+                <Link href={`/${locale}/projects`} className="hover:text-[#0f2f61] transition-colors">
+                  {isTh ? 'โปรเจคตัวอย่าง' : 'Projects'}
+                </Link>
+              </li>
+              <li className={isTh ? promptThai.className : ''}>
+                <Link href={`/${locale}/collections`} className="hover:text-[#0f2f61] transition-colors">
+                  {isTh ? 'คอลเลกชัน 2026' : 'Collections 2026'}
+                </Link>
+              </li>
+              <li className={isTh ? promptThai.className : ''}>
+                <a href={CATALOG_URL} target="_blank" rel="noreferrer" className="hover:text-[#0f2f61] transition-colors">
+                  {isTh ? 'ดาวน์โหลด Catalog' : 'Download Catalog'}
+                </a>
+              </li>
+              <li className={isTh ? promptThai.className : ''}>
+                <Link href={`/${locale}/contact`} className="hover:text-[#0f2f61] transition-colors">
+                  {isTh ? 'ติดต่อเรา' : 'Contact Us'}
+                </Link>
+              </li>
+              <li className={isTh ? promptThai.className : ''}>
+                <Link href={`/${locale}/contact`} className="hover:text-[#0f2f61] transition-colors">
+                  {isTh ? 'ขอใบเสนอราคา' : 'Request a Quote'}
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h3 lang="th" className={`${promptThai.className} text-[24px] font-light text-black mb-3`}>ติดต่อเรา</h3>
+            <h3 className={`${isTh ? promptThai.className : ''} text-[24px] font-light text-black mb-3`}>
+              {isTh ? 'ติดต่อเรา' : 'Contact'}
+            </h3>
             <ul className="space-y-2.5 text-[15px] font-light text-[#2e548b] leading-snug">
               <li>
                 <span className="text-[#b48a2a] mr-2">✆</span>
                 02-123-4567
-                <div lang="th" className={`${promptThai.className} text-[13px] text-[#7f95b3] mt-0.5`}>จันทร์-ศุกร์ 8:30-17:30</div>
+                <div className={`${isTh ? promptThai.className : ''} text-[13px] text-[#7f95b3] mt-0.5`}>
+                  {isTh ? 'จันทร์-ศุกร์ 8:30-17:30' : 'Mon–Fri 8:30–17:30'}
+                </div>
               </li>
               <li>
                 <span className="text-[#b48a2a] mr-2">✉</span>
                 info@starmarkworkspace.com
               </li>
-              <li lang="th" className={promptThai.className}>
+              <li className={isTh ? promptThai.className : ''}>
                 <span className="text-[#b48a2a] mr-2">⌖</span>
-                กรุงเทพมหานคร ประเทศไทย
+                {isTh ? 'กรุงเทพมหานคร ประเทศไทย' : 'Bangkok, Thailand'}
               </li>
             </ul>
           </div>
@@ -109,9 +147,9 @@ export function Footer() {
         <div className="mt-8 pt-4 border-t border-[#e5d9c8] flex flex-col md:flex-row justify-between gap-3 text-[12px] text-[#7089ad]">
           <p>© {new Date().getFullYear()} Starmark Work Space. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-[#284d86] transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-[#284d86] transition-colors">Terms</Link>
-            <Link href="/contact" className="hover:text-[#284d86] transition-colors">Support</Link>
+            <Link href={`/${locale}/privacy`} className="hover:text-[#284d86] transition-colors">Privacy</Link>
+            <Link href={`/${locale}/terms`} className="hover:text-[#284d86] transition-colors">Terms</Link>
+            <Link href={`/${locale}/contact`} className="hover:text-[#284d86] transition-colors">Support</Link>
           </div>
         </div>
       </div>
