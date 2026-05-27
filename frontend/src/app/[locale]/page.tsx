@@ -11,7 +11,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const products = await getProducts(undefined, locale);
   const homepage = await getHomepage(locale);
   const trendings = await getTrendings(locale);
-  const trending = trendings.length > 0 ? trendings[0] : null;
 
   // Use explicitly selected products from Strapi, or fallback to the first 4 available products
   const featuredProducts = homepage.featured_products?.length
@@ -176,8 +175,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
           {/* Heading */}
           <div className="text-center mb-24">
-            <span className="text-meta mb-5 block">
-              {locale === 'th' ? 'ทำไมต้องเลือก STARMARK' : 'WHY CHOOSE STARMARK'}
+            <span className="text-lg md:text-2xl uppercase tracking-[0.25em] font-bold text-[#b48a2a] mb-6 block">
+              {locale === 'th' ? 'ทำไมต้องเลือก STARMARK?' : 'WHY CHOOSE STARMARK?'}
             </span>
             <h2 className="font-serif text-4xl md:text-5xl text-primary font-normal">
               Our Commitment to Excellence
@@ -224,12 +223,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 desc: locale === 'th' ? 'ทีมงานพร้อมให้คำปรึกษาและดูแลหลังการขาย' : 'Dedicated support team available for consultation and care.',
               },
             ].map((item, i) => (
-              <div key={i} className="flex flex-col items-center text-center px-10 py-12 group hover:bg-neutral-50 transition-colors duration-300">
-                <div className="w-14 h-14 flex items-center justify-center border border-[#c9a84c]/40 rounded-none mb-8 text-[#b48a2a] group-hover:border-[#b48a2a] transition-colors duration-300">
-                  {item.icon}
+              <div key={i} className="flex flex-col items-center text-center px-8 py-16 group hover:bg-neutral-50 transition-colors duration-300">
+                <div className="w-20 h-20 flex items-center justify-center border border-[#c9a84c]/40 rounded-none mb-10 text-[#b48a2a] group-hover:border-[#b48a2a] transition-colors duration-300">
+                  <div className="scale-150">{item.icon}</div>
                 </div>
-                <h3 className="text-sm font-semibold tracking-wide text-primary mb-3">{item.title}</h3>
-                <p className="text-secondary text-sm font-light leading-relaxed">{item.desc}</p>
+                <h3 className="text-base md:text-lg font-semibold tracking-wide text-primary mb-4">{item.title}</h3>
+                <p className="text-secondary text-sm md:text-base font-light leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -237,10 +236,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           {/* CTA Strip */}
           <div className="mt-24 border-t border-neutral-200 pt-16 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
             <div>
-              <h3 className="font-serif text-2xl md:text-3xl text-primary font-normal mb-2">
+              <h3 className="font-serif text-3xl md:text-5xl text-primary font-normal mb-4 leading-tight">
                 {locale === 'th' ? 'พร้อมยกระดับพื้นที่ทำงานของคุณ?' : 'Ready to elevate your workspace?'}
               </h3>
-              <p className="text-secondary text-sm font-light">
+              <p className="text-secondary text-base md:text-lg font-light">
                 {locale === 'th'
                   ? 'ติดต่อทีมงานของเราเพื่อรับคำปรึกษาและใบเสนอราคาฟรี'
                   : 'Contact our team for a free consultation and quotation.'}
